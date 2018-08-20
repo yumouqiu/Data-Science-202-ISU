@@ -5,4 +5,4 @@
 [Lecture 0](Lecture0-Getting Started\Lecture0.html)
 
 ## Acknowledgement
-Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciate Dr. Hofmann share the notes and examples, which help preparing the course. 
+Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciates Dr. Hofmann shares the notes, examples, ect., which help preparing the course. 
