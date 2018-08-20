@@ -3,15 +3,23 @@
 
 ## Lectures
 
-[Lecture 0](Lecture0-Getting Started\Lecture0.html)
+08/21 [Lecture 0](Lecture0-Getting Started\Lecture0.html)
 
-[Lecture 1-1](Lecture1_collaborative-environment\01b_favorite-topics.html)
+08/23 [Lecture 1-1](Lecture1_collaborative-environment\01b_favorite-topics.html)
 
-[Lecture 1-2](Lecture1_collaborative-environment\01_test-case.html)
+08/23 [Lecture 1-2](Lecture1_collaborative-environment\01_test-case.html)
 
-[Lecture 1-3-R installation](Lecture1_collaborative-environment\R-installation.html)
+08/28 [Lecture 1-3-R installation](Lecture1_collaborative-environment\R-installation.html)
+
+08/28
+
+08/28
+
+08/30 
 
 ## Labs
+
+08/30 [Lab 1]
 
 ## Homework
 
