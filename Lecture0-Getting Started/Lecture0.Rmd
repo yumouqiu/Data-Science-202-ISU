@@ -158,9 +158,9 @@ Full syllabus is available from Canvas.
 - Hadley Wickham: *[ggplot2: Elegant Graphics for Data Analysis](https://www.amazon.com/ggplot2-Elegant-Graphics-Data-Analysis/dp/0387981403)*
 - Yihui Xie: *Dynamic Documents with R and knitr*
 
-### Course website: Canvas
-- Materials, assignments, code
-- grading
+### Course website: 
+- Canvas: materials, assignments, code and grading
+- https://yumouqiu.github.io/Data-Science-202-ISU/: lectures
 
 ## Grades
 
