@@ -9,6 +9,8 @@
 
 [Lecture 1-2](Lecture1_collaborative-environment\01_test-case.html)
 
+[Lecture 1-3-R installation](Lecture1_collaborative-environment\R-installation.html)
+
 ## Labs
 
 ## Homework
