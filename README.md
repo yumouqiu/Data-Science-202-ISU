@@ -1,9 +1,8 @@
 # Data-Science-202-ISU
+<!--- Data Science 202 course at Iowa State University, Fall 2018. --->
 
 ## Lectures
 [Lecture 0](Lecture0-Getting Started\Lecture0.html)
 
-
-Data Science 202 course at Iowa State University, Fall 2018.
-
-Most of the materials are from Dr. Heike Hofmann at ISU.
+## Acknowledgement
+Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciate Dr. Hofmann share the notes and examples, which help preparing the course. 
