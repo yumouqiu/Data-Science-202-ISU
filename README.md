@@ -3,6 +3,8 @@
 
 ## Lectures
 
+### August
+
 08/21 [Lecture 0](Lecture0-Getting Started\Lecture0.html)
 
 08/23 [Lecture 1-1](Lecture1_collaborative-environment\01b_favorite-topics.html)
@@ -16,6 +18,8 @@
 08/28
 
 08/30 
+
+### September
 
 ## Labs
 
