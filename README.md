@@ -3,6 +3,8 @@
 
 ## Lectures
 [Lecture 0](Lecture0-Getting Started\Lecture0.html)
+[Lecture 1-1](Lecture1_collaborative-environment\01_test-case.html)
+[Lecture 1-2](Lecture1_collaborative-environment\01b_favorite-topics.html)
 
 ## Labs
 
