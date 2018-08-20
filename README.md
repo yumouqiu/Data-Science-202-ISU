@@ -13,9 +13,9 @@
 
 08/28 [Lecture 1-3-R installation](Lecture1_collaborative-environment\R-installation.html)
 
-08/28
+08/28 [Lecture 1-4-Rstudio Rmarkdown](Lecture1_collaborative-environment\03_rmarkdown.html)
 
-08/28
+08/28 [Lecture 1-5](Lecture1_collaborative-environment\02_test-case-solution.html)
 
 08/30 
 
