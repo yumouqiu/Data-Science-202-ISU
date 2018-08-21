@@ -17,7 +17,7 @@
 
 08/28 [Lecture 1-5](Lecture1_collaborative-environment\02_test-case-solution.html)
 
-08/30 
+08/30 [Lecture 1-6-Git](Lecture1_collaborative-environment\04_git.html)
 
 ### September
 
