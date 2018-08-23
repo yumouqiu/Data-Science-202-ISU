@@ -26,8 +26,8 @@ library(tidyverse)
 ... this is what the raw data looks like ...
 
 ```{r, echo=FALSE}
-topics <- read.csv("data/topics202.csv")
-topics <- topics %>% select(-X, -Entry.Id)
+topics <- read.csv("data/Topics of interest.csv")
+topics <- topics %>% select(-Entry.Id)
 head(topics)
 ```
 
