@@ -23,7 +23,7 @@
 
 ## Labs
 
-08/30 [Lab 1]
+08/30 [Lab 1](Lab\lab01.html)
 
 ## Homework
 
