@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## An example of Data Science
-#### Due: 9/4/2018 before 11pm. Submit to Qihao Zhang (TA): qihaoz@iastate.edu
+#### Due: 9/4/2018 before 11pm. Submit in Canvas (file upload).
 
 1. Download the RMarkdown file with these homework instructions to use as a template for your work.
 Make sure to replace "Your Name" in the YAML with your name.
