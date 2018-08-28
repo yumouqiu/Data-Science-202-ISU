@@ -1,0 +1,27 @@
+---
+title: 'Homework #1'
+author: "Your Name"
+date: "8/28/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## An example of Data Science
+#### Due: 9/4/2018 before 11pm. Submit to Qihao Zhang (TA): qihaoz@iastate.edu
+
+1. Download the RMarkdown file with these homework instructions to use as a template for your work.
+Make sure to replace "Your Name" in the YAML with your name.
+
+2. Write a paragraph (~200 words) describing an example of what you consider data science. Write your paragraph in R Markdown. Include at least 
+    a. one link to a chart or an image and 
+    b. at least one itemized or enumerated list.
+    
+3. Generate the graph of LifExp vs. gdpPercap for US, Canada (fixed data) and Australia by R Markdown based on the dataset "gapminder-5060", like what we did in the class.
+
+Note: your submission is supposed to be fully reproducible, i.e. the TA and I will 'knit' your submission in RStudio. Including the link to the image is the tricky part here. Make sure that you don't use any file structure that depends on your computing environment.
+
+
+For the submission: submit your solution in an **R Markdown file** and (just for insurance) submit the corresponding html (or Word) file with it. 
