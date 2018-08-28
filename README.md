@@ -27,5 +27,7 @@
 
 ## Homework
 
+08/28 [Homework 1 (due 09/04)](Homework\homework01.html)
+
 ## Acknowledgement
 Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciates Dr. Hofmann shares the notes, examples, ect., which help preparing the course. 
