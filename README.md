@@ -31,5 +31,3 @@
 
 ## Acknowledgement
 Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciates Dr. Hofmann shares the notes, examples, ect., which help preparing the course. 
-
-TA
