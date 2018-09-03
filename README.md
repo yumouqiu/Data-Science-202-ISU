@@ -21,6 +21,10 @@
 
 ### September
 
+09/04 [Lecture 2-1-R basics](Lecture2-R-basics\01_r-basics.html)
+
+09/06 [Lecture 2-2-R graphics](Lecture2-R-basics\02_r-graphics.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
