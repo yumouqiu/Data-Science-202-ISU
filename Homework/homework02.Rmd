@@ -28,7 +28,7 @@ mpg dataset.
 over fixed distance) rather than fuel economy (distance traveled with fixed
 amount of fuel). How could you convert `cty` and `hwy` into the European
 standard of liter/100 km? Introduce corresponding variables into the `mpg` data.
-5.  Are cars in 2008 more fuel efficient than cars in 1999? Expand on your answer in (2) for a visual approach to this question. Note: you are not asked to find numeric answers. Instead, interpret plots. 
+5.  Are cars in 2008 more fuel efficient than cars in 1999? Expand on your answer in (3) for a visual approach to this question. Note: you are not asked to find numeric answers. Instead, interpret plots. 
 6. Use the `ggplot2` package to create  side-by-side boxplots of `cty` by `class`. Describe the relationship in 2-3 sentences. 
 Change the label for the y-axis to 'city miles per gallon' (see ```?ylab```).  
 
