@@ -23,11 +23,15 @@
 
 09/04 [Lecture 2-1-R basics](Lecture2-R-basics\01_r-basics.html)
 
-09/06 [Lecture 2-2-R graphics](Lecture2-R-basics\02_r-graphics.html)
+09/06 [Lecture 2-2-R graphics I](Lecture2-R-basics\02_r-graphics.html)
+
+09/11 [Lecture 2-3-R graphics II](Lecture2-R-basics\03_r-graphics.html)
 
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
+
+09/13 [Lab 2](Lab\lab02.html)
 
 ## Homework
 
