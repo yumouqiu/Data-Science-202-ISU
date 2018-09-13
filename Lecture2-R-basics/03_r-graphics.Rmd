@@ -36,7 +36,7 @@ Can facet to display plots for different subsets:
 
 ```{r, message=FALSE}
 ggplot(aes(x = Year, y = Murder), data=fbiwide) +
-  facet_wrap(~State) + 
+  facet_wrap(~State, scale = "free_y") + 
   geom_point()
 ```
 
@@ -170,6 +170,19 @@ ggplot(aes(x = Violent.crime), data=fbi) +
 
 ggplot(aes(x = Count), data = fbi) + geom_histogram() +
   facet_wrap(~Type, scales = "free")
+
+head(fbiwide)
+head(fbi)
+
+fbi.self = c()
+for (i in 1 : 9){
+  count = fbiwide[, (i + 5)]
+  temp1 = cbind(fbiwide[, c(1 : 4)], count)
+  fbi.self = rbind(fbi.self, temp1)
+}
+
+CrimeNames = names(fbiwide)[6 : 14]
+fbi.self$Type = rep(CrimeNames, each = dim(fbiwide)[1])
 ```
 
 ## More on `ggplot2`
