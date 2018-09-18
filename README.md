@@ -27,6 +27,10 @@
 
 09/11 [Lecture 2-3-R graphics II](Lecture2-R-basics\03_r-graphics.html)
 
+09/18 [Lecture 2-4-R logical](Lecture2-R-basics\04_logical.html)
+
+09/20 [Lecture 2-5-R factors](Lecture2-R-basics\05_factors.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
