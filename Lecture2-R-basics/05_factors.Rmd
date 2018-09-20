@@ -135,6 +135,29 @@ Reorder the boxplots of crime rates, such that the boxplots are ordered by their
 - <span style="color:white">
 For one type of crime (`subset` or `filter`) plot boxplots of rates by state, reorder boxplots by median crime rates</span>
 
+
+```{r, echo = FALSE, eval = FALSE}
+library(ggplot2)
+fbi$Crime.rate = fbi$Count / fbi$Population * 70000
+ggplot(data = fbi, aes(x = Type, y = Crime.rate)) + geom_boxplot() + coord_flip()
+
+fbi1 = fbi
+fbi1$Type = factor(fbi1$Type)
+levels(fbi1$Type)
+levels(fbi1$Type)[c(1, 5, 6)] = c("Assault", "MV.theft", "Murder")
+ggplot(data = fbi1, aes(x = Type, y = Crime.rate)) + geom_boxplot() + coord_flip()
+
+fbi2 = fbi1
+fbi2$Type = factor(fbi2$Type, levels = levels(reorder(fbi1$Type, fbi1$Crime.rate, median, na.rm=TRUE)))
+ggplot(data = fbi2, aes(x = Type, y = Crime.rate)) + geom_boxplot() + coord_flip()
+
+fbi3 = dplyr::filter(fbi, Type == "Burglary")
+mode(fbi3$State)
+fbi3$State = factor(fbi3$State)
+fbi3$State = factor(fbi3$State, levels = levels(reorder(fbi3$State, fbi3$Crime.rate, median, na.rm=TRUE)))
+ggplot(data = fbi3, aes(x = State, y = Crime.rate)) + geom_boxplot() + coord_flip()
+```
+
 ## Changing Levels' names
 
 ```{r}

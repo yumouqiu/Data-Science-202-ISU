@@ -70,6 +70,27 @@ Caution! there is another function called `filter` in the `stats` package. Use `
 
 <span style="color:white">Extra credit (1 point): submit your code (regardless of whether it works or not) in Canvas (yourturn-sept18).
 
+```{r, eval = FALSE, echo = FALSE}
+library(tidyverse)
+library(classdata)
+
+crime.IA = dplyr::filter(fbiwide, State == "Iowa")
+ggplot(data = crime.IA, aes(x = Year, y = Legacy.rape)) + geom_point()
+
+crime.2009 = dplyr::filter(fbiwide, Year == 2009)
+ggplot(data = crime.2009, aes(x = State)) + geom_bar(aes(weight = Legacy.rape)) + coord_flip()
+
+fbi.2009 = dplyr::filter(fbi, Year == 2009)
+ggplot(data = fbi.2009, aes(x = Abb)) + geom_bar(aes(weight = Count, fill = Type)) + coord_flip()
+
+crime.last5 = dplyr::filter(fbiwide, Year %in% c(2010 : 2014))
+crime.last5$Murder.rate = crime.last5$Murder / crime.last5$Population*100000
+quantile(crime.last5$Murder.rate, 0.9)
+out = dplyr::filter(crime.last5, Murder.rate > quantile(crime.last5$Murder.rate, 0.9))
+out[, c(1 : 3)]
+```
+
+
 ## Updating elements in a vector
 
 You can take a subset and update the original data:
@@ -112,3 +133,12 @@ if that variable exists before, it is being over-written/updated
 - <span style="color:white">What format does the object have?</span>
 - <span style="color:white">Replace the problematic value in life expectancy for Canada in 1957  by 69.96. </span>
 
+```{r, eval = FALSE, echo = FALSE}
+gapminder = read.csv("https://stat480-at-isu.github.io/materials/01_collaborative-environment/data/gapminder-5060.csv")
+str(gapminder)
+
+dplyr::filter(gapminder, country == "Canada" & year == 1957)
+
+gapminder$lifeExp = replace(gapminder$lifeExp, gapminder$country == "Canada" & gapminder$year == 1957, 69.96)
+dplyr::filter(gapminder, country == "Canada" & year == 1957)
+```
