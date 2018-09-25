@@ -31,11 +31,15 @@
 
 09/20 [Lecture 2-5-R factors](Lecture2-R-basics\05_factors.html)
 
+09/25 [Lecture 2-6-R factors visual](Lecture2-R-basics\06_vis-factor.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
 
 09/13 [Lab 2](Lab\lab02.html)
+
+09/27 [Lab 3](Lab\lab03.html)
 
 ## Homework
 
@@ -43,7 +47,7 @@
 
 09/06 [Homework 2 (due 09/13)](Homework\homework02.html)
 
-09/20 [Homework 2 (due 09/28)](Homework\homework03.html)
+09/20 [Homework 3 (due 09/28)](Homework\homework03.html)
 
 ## Acknowledgement
 Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciates Dr. Hofmann shares the notes, examples, ect., which help preparing the course. 
