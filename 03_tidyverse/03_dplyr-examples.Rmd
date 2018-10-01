@@ -1,6 +1,6 @@
 ---
 title: "dplyr examples: group_by and mutate"
-author: Heike Hofmann
+author: Yumou Qiu
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -11,13 +11,11 @@ output:
 
 # FBI data
 
-# `group_by` and `mutate`
+## `group_by` and `mutate`
 
-## Working with `fbi`
+### Working with `fbi` in the `classdata` package
 
-`fbi` data included in the `classdata` package
-
-upgrade the package: `devtools::install_github("heike/classdata")`
+<!--- upgrade the package: `devtools::install_github("heike/classdata")` --->
 
 ```{r, message=FALSE}
 library(tidyverse)
@@ -33,7 +31,7 @@ head(fbi)
 
 ```{r}
 fbi <- fbi %>% mutate(
-  Rate = Count/Population*70000
+  Rate = Count/Population*70000, Type = factor(Type), Year = factor(Year)
   )
 ```
 
@@ -47,7 +45,7 @@ fbi <- fbi %>% mutate(
 - <span style="color:white">Plot crime rates by type in side-by-side boxplots. Medians of the boxplots should be ordered.</span><br><br><br><br><br><br><br><br>
 
 ```{r, warning = FALSE}
-fbi <- fbi %>% ungroup %>%   mutate(
+fbi <- fbi %>% ungroup %>% mutate(
   Type = reorder(Type, Rate, FUN=median, na.rm=TRUE)
 )
 fbi %>% 
