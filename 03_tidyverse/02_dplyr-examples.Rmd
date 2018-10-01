@@ -1,6 +1,6 @@
 ---
 title: "dplyr examples"
-author: Heike Hofmann
+author: Yumou Qiu
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -53,6 +53,7 @@ HAPPY <- HAPPY %>% mutate(
   happy = factor(tolower(HAPPY))
 ) %>% select(-HAPPY)
 
+levels(HAPPY$happy)
 head(HAPPY)
 ```
 
@@ -98,7 +99,7 @@ HAPPY %>% ggplot(aes(x = degree)) + geom_bar()
 
 `happy` data included in the `classdata` package
 
-upgrade the package: `devtools::install_github("heike/classdata")`
+<!--- upgrade the package: `devtools::install_github("heike/classdata")` --->
 
 ```{r, message=FALSE}
 library(classdata)

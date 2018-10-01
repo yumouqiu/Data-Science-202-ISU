@@ -33,6 +33,12 @@
 
 09/25 [Lecture 2-6-R factors visual](Lecture2-R-basics\06_vis-factor.html)
 
+### October
+
+10/02 [Lecture 3-1-dplyr](03_tidyverse\01_dplyr.html)
+
+10/02 [Lecture 3-1-dplyr example](03_tidyverse\02_dplyr-examples.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
