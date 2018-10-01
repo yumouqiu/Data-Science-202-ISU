@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DS 202 - working with missing values</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="09_missing-values_files/rmdshower/node_modules/shower-ribbon/styles/screen-4x3.css">
+  <link rel="stylesheet" href="09_missing-values_files/rmdshower/style-common.css">
+  <link rel="stylesheet" href="09_missing-values_files/rmdshower/style-ribbon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="09_missing-values_files/rmdshower/auto-render.min.js" type="text/javascript"></script>
+  
+  
+    <style type="text/css">
+   div.sourceCode { overflow-x: auto; }
+   table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+     margin: 0; padding: 0; vertical-align: baseline; border: none; }
+   table.sourceCode { width: 100%; line-height: 100%; }
+   td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+   td.sourceCode { padding-left: 5px; }
+   code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+   code > span.dt { color: #902000; } /* DataType */
+   code > span.dv { color: #40a070; } /* DecVal */
+   code > span.bn { color: #40a070; } /* BaseN */
+   code > span.fl { color: #40a070; } /* Float */
+   code > span.ch { color: #4070a0; } /* Char */
+   code > span.st { color: #4070a0; } /* String */
+   code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+   code > span.ot { color: #007020; } /* Other */
+   code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+   code > span.fu { color: #06287e; } /* Function */
+   code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+   code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+   code > span.cn { color: #880000; } /* Constant */
+   code > span.sc { color: #4070a0; } /* SpecialChar */
+   code > span.vs { color: #4070a0; } /* VerbatimString */
+   code > span.ss { color: #bb6688; } /* SpecialString */
+   code > span.im { } /* Import */
+   code > span.va { color: #19177c; } /* Variable */
+   code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+   code > span.op { color: #666666; } /* Operator */
+   code > span.bu { } /* BuiltIn */
+   code > span.ex { } /* Extension */
+   code > span.pp { color: #bc7a00; } /* Preprocessor */
+   code > span.at { color: #7d9029; } /* Attribute */
+   code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+   code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+   code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+   code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  
+  
+  
+</head>
+
+<body class="shower list">
+
+  <header class="caption">
+    <h1>DS 202 - working with missing values</h1>
+    <p>Heike Hofmann</p>
+  </header>
+
+    
+  
+<section id="working-with-missing-values" class="titleslide slide level1"><h2 class="shout">Working with missing values</h2></section><section id="missing-values-in-r" class="slide level2">
+<h2>Missing values in R</h2>
+<ul>
+<li>R allows consistent handling of mising values</li>
+<li><code>NA</code> is the special code for “not available”</li>
+<li><code>NaN</code> is the code for “not a number”, e.g. in 0/0</li>
+<li>missing values propagate in calculus, e.g. for any object <code>x</code> we get <code>NA + x = NA</code>, <code>NA * x = NA</code></li>
+</ul>
+</section><section id="essential-functions" class="slide level2">
+<h2>Essential functions</h2>
+<ul>
+<li>direct testing for missing values is resulting in an <code>NA</code>:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>)
+x <span class="op">==</span><span class="st"> </span><span class="ot">NA</span></code></pre></div>
+<pre><code>## [1] NA NA</code></pre>
+<ul>
+<li>instead use function <code>is.na</code> for vector <code>x</code>:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.na</span>(x)</code></pre></div>
+<pre><code>## [1] FALSE  TRUE</code></pre>
+<ul>
+<li><code>complete.cases</code> does the same for a data.frame</li>
+</ul>
+</section><section id="missing-values-essentials-2" class="slide level2">
+<h2>Missing values essentials (2)</h2>
+<ul>
+<li>DANGER ZONE: <code>na.omit</code> removes all instances of mising values in an object (all rows with any missing value in case <code>x</code> is a data frame)</li>
+<li>Many functions have parameter <code>na.rm</code></li>
+</ul>
+</section><section id="your-turn-10-mins" class="slide level2 white">
+<h2>Your turn (10 mins)</h2>
+<p><img src="images/blue.jpeg" width="1200" class="cover"></p>
+<p><span style="color:white">Use the <code>box</code> data from the package <code>classdata</code></span></p>
+<ul>
+<li><span style="color:white">Are there any missing values in the dataset <code>box</code>?</span></li>
+<li><span style="color:white">What are the values of <code>Rank</code> when <code>Rank.Last.Week</code> is missing?</span></li>
+<li><span style="color:white">What is the dimension of the data set <code>box</code>, when removing all missing values with the function <code>na.omit</code>?</span></li>
+<li><span style="color:white">Why does the following statement fail? <br> <code>box$Rank.Last.Week &lt;- na.omit(box$Rank.Last.Week)</code> </span></li>
+</ul>
+</section>
+
+  <!--
+  To hide progress bar from entire presentation
+  just remove “progress” element.
+  -->
+  <!-- <div class="progress"></div> -->
+  <script src="09_missing-values_files/rmdshower/node_modules/shower/node_modules/shower-core/shower.min.js"></script>
+  <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+  <!-- Photos by John Carey, fiftyfootshadows.net -->
+
+    <script>renderMathInElement(document.body);</script>
+  
+  
+</body>
+</html>

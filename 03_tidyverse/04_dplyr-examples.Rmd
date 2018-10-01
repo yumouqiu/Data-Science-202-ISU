@@ -1,0 +1,24 @@
+---
+title: "DS 202: dplyr functions"
+author: Heike Hofmann
+ratio: 16x10
+output:
+  rmdshower::shower_presentation:
+    self_contained: false
+    katex: true
+    theme: ribbon
+---
+
+## Keywords: which function is it?
+
+
+- `mutate`: introduce, replace, reorder, ...
+- `summarise`: calculate, average, summary, ...
+- `group_by`: for each of, 
+- `filter`: exclude, only consider, ...
+
+## Potential traps
+
+- using the $ notation in tidyverse can lead to strange behavior and error messages
+- don't forget to save statements back into the dataset (`mutate`, `arrange`) or  new data objects (`summarise`, `filter`)
+- when using the pipe `%>%`: what is output from lhs, first parameter on rhs?

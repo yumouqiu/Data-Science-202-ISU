@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DS 202: dplyr functions</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="04_dplyr-examples_files/rmdshower/node_modules/shower-ribbon/styles/screen-4x3.css">
+  <link rel="stylesheet" href="04_dplyr-examples_files/rmdshower/style-common.css">
+  <link rel="stylesheet" href="04_dplyr-examples_files/rmdshower/style-ribbon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="04_dplyr-examples_files/rmdshower/auto-render.min.js" type="text/javascript"></script>
+  
+  
+  
+  
+  
+</head>
+
+<body class="shower list">
+
+  <header class="caption">
+    <h1>DS 202: dplyr functions</h1>
+    <p>Heike Hofmann</p>
+  </header>
+
+    
+  
+<section id="keywords-which-function-is-it" class="slide level2">
+<h2>Keywords: which function is it?</h2>
+<ul>
+<li><code>mutate</code>: introduce, replace, reorder, …</li>
+<li><code>summarise</code>: calculate, average, summary, …</li>
+<li><code>group_by</code>: for each of,</li>
+<li><code>filter</code>: exclude, only consider, …</li>
+</ul>
+</section>
+<section id="potential-traps" class="slide level2">
+<h2>Potential traps</h2>
+<ul>
+<li>using the $ notation in tidyverse can lead to strange behavior and error messages</li>
+<li>don’t forget to save statements back into the dataset (<code>mutate</code>, <code>arrange</code>) or new data objects (<code>summarise</code>, <code>filter</code>)</li>
+<li>when using the pipe <code>%&gt;%</code>: what is output from lhs, first parameter on rhs?</li>
+</ul>
+</section>
+
+  <!--
+  To hide progress bar from entire presentation
+  just remove “progress” element.
+  -->
+  <!-- <div class="progress"></div> -->
+  <script src="04_dplyr-examples_files/rmdshower/node_modules/shower/node_modules/shower-core/shower.min.js"></script>
+  <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+  <!-- Photos by John Carey, fiftyfootshadows.net -->
+
+    <script>renderMathInElement(document.body);</script>
+  
+  
+</body>
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>The dplyr package</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="01_dplyr_files/rmdshower/node_modules/shower-ribbon/styles/screen-4x3.css">
+  <link rel="stylesheet" href="01_dplyr_files/rmdshower/style-common.css">
+  <link rel="stylesheet" href="01_dplyr_files/rmdshower/style-ribbon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="01_dplyr_files/rmdshower/auto-render.min.js" type="text/javascript"></script>
+  
+  
+    <style type="text/css">
+   div.sourceCode { overflow-x: auto; }
+   table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+     margin: 0; padding: 0; vertical-align: baseline; border: none; }
+   table.sourceCode { width: 100%; line-height: 100%; }
+   td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+   td.sourceCode { padding-left: 5px; }
+   code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+   code > span.dt { color: #902000; } /* DataType */
+   code > span.dv { color: #40a070; } /* DecVal */
+   code > span.bn { color: #40a070; } /* BaseN */
+   code > span.fl { color: #40a070; } /* Float */
+   code > span.ch { color: #4070a0; } /* Char */
+   code > span.st { color: #4070a0; } /* String */
+   code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+   code > span.ot { color: #007020; } /* Other */
+   code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+   code > span.fu { color: #06287e; } /* Function */
+   code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+   code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+   code > span.cn { color: #880000; } /* Constant */
+   code > span.sc { color: #4070a0; } /* SpecialChar */
+   code > span.vs { color: #4070a0; } /* VerbatimString */
+   code > span.ss { color: #bb6688; } /* SpecialString */
+   code > span.im { } /* Import */
+   code > span.va { color: #19177c; } /* Variable */
+   code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+   code > span.op { color: #666666; } /* Operator */
+   code > span.bu { } /* BuiltIn */
+   code > span.ex { } /* Extension */
+   code > span.pp { color: #bc7a00; } /* Preprocessor */
+   code > span.at { color: #7d9029; } /* Attribute */
+   code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+   code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+   code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+   code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  
+  
+  
+</head>
+
+<body class="shower list">
+
+  <header class="caption">
+    <h1>The dplyr package</h1>
+    <p>Heike Hofmann</p>
+  </header>
+
+    
+  
+<section id="data-management-in-r-the-tidyverse" class="slide level2">
+<h2>Data management in R: the tidyverse</h2>
+<p><img src="images/tidyverse.jpeg" alt="" width=600></p>
+</section>
+<section id="outline" class="slide level2">
+<h2>Outline</h2>
+<ul>
+<li>elements of data management: filtering, sorting, and aggregations</li>
+<li>the pipe operator <code>%&gt;%</code></li>
+<li>lots of examples</li>
+</ul>
+</section>
+<section id="tidyverse" class="slide level2">
+<h2><code>tidyverse</code></h2>
+<p><code>tidyverse</code> is a package bundling several other R packages:</p>
+<ul>
+<li><code>ggplot2</code>, <code>dplyr</code>, <code>tidyr</code>, <code>purrr</code>, …</li>
+<li>share common data representations and API, i.e. work well together</li>
+<li>see <a href="https://github.com/hadley/tidyverse" class="uri">https://github.com/hadley/tidyverse</a> for more information</li>
+</ul>
+<p>Summaries</p>
+<ul>
+<li>numerical summaries - <a href="">elements</a> of <code>dplyr</code> and <code>tidyr</code></li>
+<li>graphical summaries - <a href="">visualizations</a> with <code>ggplot2</code></li>
+</ul>
+</section>
+<section id="dplyr" class="slide level2">
+<h2><code>dplyr</code></h2>
+<p>There are a couple of primary <code>dplyr</code> <em>verbs</em>, representing distinct data analysis tasks:</p>
+<ul>
+<li><code>filter</code>: Select specified rows of a data frame, produce subsets</li>
+<li><code>arrange</code>: Reorder the rows of a data frame</li>
+<li><code>select</code>: Select particular columns of a data frame</li>
+<li><code>mutate</code>: Add new or change existing columns of the data frame (as functions of existing columns)</li>
+<li><code>summarize</code>: Create collapsed summaries of a data frame</li>
+<li><code>group_by</code>: Introduce structure to a data frame</li>
+</ul>
+</section>
+<section id="common-structure" class="slide level2">
+<h2>Common structure</h2>
+<p>all functions of the tidyverse have <code>data</code> as their first element</p>
+<p>Important: do not use <code>$</code> notation for variables within these functions, e.g:</p>
+<p><code>ggplot(data = fbi, aes(x = Year, y = Count)) + geom_point()</code></p>
+<p><code>filter(fbi, Year&gt;=2019, State==&quot;Iowa&quot;)</code></p>
+</section>
+<section id="the-pipe-operator" class="slide level2">
+<h2>The pipe operator <code>%&gt;%</code></h2>
+<p><code>f(x) %&gt;% g(y)</code> is equivalent to <code>g(f(x), y)</code></p>
+<p>i.e. the output of one function is used as input to the next function. This function can be the identity</p>
+<p>Consequences:</p>
+<ul>
+<li><code>x %&gt;% f(y)</code> is the same as <code>f(x, y)</code></li>
+<li>statements of the form <code>k(h(g(f(x, y), z), u), v, w)</code> become <code>x %&gt;% f(y) %&gt;% g(z) %&gt;% h(u) %&gt;% k(v, w)</code></li>
+<li>read <code>%&gt;%</code> as “then do”</li>
+</ul>
+</section>
+<section id="using-the-pipe" class="slide level2">
+<h2>Using the pipe <code>%&gt;%</code></h2>
+<pre><code>ggplot(data = filter(fbi, Type==&quot;Murder.and.nonnegligent.Manslaughter&quot;, 
+aes(x = Year, y = Count)) + geom_point()</code></pre>
+<p>becomes</p>
+<pre><code>fbi %&gt;% 
+  filter(Type==&quot;Murder.and.nonnegligent.Manslaughter&quot;) %&gt;%
+  ggplot(aes(x = Year, y = Count)) + 
+    geom_point()</code></pre>
+</section>
+<section id="filter" class="slide level2">
+<h2><code>filter</code></h2>
+<p>select a subset of the observations (horizontal selection):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(classdata)
+<span class="kw">library</span>(dplyr)
+
+fbi %&gt;%<span class="st"> </span><span class="kw">filter</span>(Type==<span class="st">&quot;Burglary&quot;</span>, Year==<span class="dv">2014</span>) %&gt;%<span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##        State Abb Year Population     Type  Count Violent.crime
+## 1    Alabama  AL 2014    4849377 Burglary  39715         FALSE
+## 2     Alaska  AK 2014     736732 Burglary   3150         FALSE
+## 3    Arizona  AZ 2014    6731484 Burglary  43562         FALSE
+## 4   Arkansas  AR 2014    2966369 Burglary  24790         FALSE
+## 5 California  CA 2014   38802500 Burglary 202670         FALSE
+## 6   Colorado  CO 2014    5355866 Burglary  23472         FALSE</code></pre>
+</section>
+<section id="arrange" class="slide level2">
+<h2><code>arrange</code></h2>
+<p><code>arrange</code> sorts a data set by the values in one or more variables</p>
+<p>Successive variables break ties in previous ones</p>
+<p><code>desc</code> stands for descending, otherwise rows are sorted from smallest to largest</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fbi %&gt;%<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Year), Type, <span class="kw">desc</span>(Count)) %&gt;%<span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##        State Abb Year Population               Type Count Violent.crime
+## 1 California  CA 2014   38802500 Aggravated.assault 91803          TRUE
+## 2    Florida  FL 2014   19893297 Aggravated.assault 72895          TRUE
+## 3      Texas  TX 2014   26956958 Aggravated.assault 65656          TRUE
+## 4   New York  NY 2014   19746227 Aggravated.assault 45303          TRUE
+## 5  Tennessee  TN 2014    6549352 Aggravated.assault 29681          TRUE
+## 6   Illinois  IL 2014   12880580 Aggravated.assault 27520          TRUE</code></pre>
+</section>
+<section id="select" class="slide level2">
+<h2><code>select</code></h2>
+<p>Select specific variables of a data frame (vertical selection):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fbi %&gt;%<span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Year), Type, <span class="kw">desc</span>(Count)) %&gt;%
+<span class="st">  </span><span class="kw">select</span>(Type, Count, State, Year) %&gt;%<span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##                 Type Count      State Year
+## 1 Aggravated.assault 91803 California 2014
+## 2 Aggravated.assault 72895    Florida 2014
+## 3 Aggravated.assault 65656      Texas 2014
+## 4 Aggravated.assault 45303   New York 2014
+## 5 Aggravated.assault 29681  Tennessee 2014
+## 6 Aggravated.assault 27520   Illinois 2014</code></pre>
+</section>
+<section id="mutate" class="slide level2">
+<h2><code>mutate</code></h2>
+<p>Introduce a new variable into a data set or transform/update an old variable:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fbi %&gt;%<span class="st"> </span><span class="kw">mutate</span>(<span class="dt">Rate =</span> Count/Population*<span class="dv">70000</span>) %&gt;%<span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##     State Abb Year Population                                 Type Count
+## 1 Alabama  AL 1961    3302000 Murder.and.nonnegligent.Manslaughter   427
+## 2 Alabama  AL 1962    3358000 Murder.and.nonnegligent.Manslaughter   316
+## 3 Alabama  AL 1963    3347000 Murder.and.nonnegligent.Manslaughter   340
+## 4 Alabama  AL 1964    3407000 Murder.and.nonnegligent.Manslaughter   316
+## 5 Alabama  AL 1965    3462000 Murder.and.nonnegligent.Manslaughter   395
+## 6 Alabama  AL 1966    3517000 Murder.and.nonnegligent.Manslaughter   384
+##   Violent.crime     Rate
+## 1          TRUE 9.052090
+## 2          TRUE 6.587254
+## 3          TRUE 7.110846
+## 4          TRUE 6.492515
+## 5          TRUE 7.986713
+## 6          TRUE 7.642877</code></pre>
+</section>
+<section id="summarise" class="slide level2">
+<h2><code>summarise</code></h2>
+<p>summarize observations into a (set of) one-number statistic(s):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fbi %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_rate =</span> <span class="kw">mean</span>(Count/Population*<span class="dv">70000</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+              <span class="dt">sd_rate =</span> <span class="kw">sd</span>(Count/Population*<span class="dv">70000</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>##   mean_rate  sd_rate
+## 1  406.6905 622.2136</code></pre>
+</section>
+<section id="summarise-and-group_by" class="slide level2">
+<h2><code>summarise</code> and <code>group_by</code></h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fbi %&gt;%
+<span class="st">    </span><span class="kw">group_by</span>(Type) %&gt;%
+<span class="st">    </span><span class="kw">summarise</span>(<span class="dt">mean_rate =</span> <span class="kw">mean</span>(Count/Population*<span class="dv">70000</span>, <span class="dt">na.rm=</span><span class="ot">TRUE</span>), 
+              <span class="dt">sd_rate =</span> <span class="kw">sd</span>(Count/Population*<span class="dv">70000</span>, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</code></pre></div>
+<pre><code>## # A tibble: 8 x 3
+##   Type                                 mean_rate sd_rate
+##   &lt;fct&gt;                                    &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Aggravated.assault                      167     114   
+## 2 Burglary                                648     309   
+## 3 Larceny.theft                          1682     629   
+## 4 Legacy.rape                              20.1    10.8 
+## 5 Motor.vehicle.theft                     249     159   
+## 6 Murder.and.nonnegligent.Manslaughter      4.63    4.29
+## 7 Rape                                     28.9    11.3 
+## 8 Robbery                                  90.0   105</code></pre>
+</section>
+<section id="lets-use-these-tools" class="titleslide slide level1"><h2 class="shout">Let’s use these tools</h2></section><section id="adapting-the-happy-data" class="slide level2">
+<h2>Adapting the happy data</h2>
+</section><section id="french-fries-data" class="slide level2">
+<h2>French fries data</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(french_fries, <span class="dt">package=</span><span class="st">&quot;reshape2&quot;</span>)</code></pre></div>
+<ul>
+<li>data from sensory experiment conducted at Iowa State University in 2004</li>
+<li>investigators were interested in comparing effects of three different fryer oils on taste of fries</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">french_fries %&gt;%<span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>##    time treatment subject rep potato buttery grassy rancid painty
+## 61    1         1       3   1    2.9     0.0    0.0    0.0    5.5
+## 25    1         1       3   2   14.0     0.0    0.0    1.1    0.0
+## 62    1         1      10   1   11.0     6.4    0.0    0.0    0.0
+## 26    1         1      10   2    9.9     5.9    2.9    2.2    0.0
+## 63    1         1      15   1    1.2     0.1    0.0    1.1    5.1
+## 27    1         1      15   2    8.8     3.0    3.6    1.5    2.3</code></pre>
+</section><section id="did-the-french-fries-taste-worse-over-time" class="slide level2">
+<h2>Did the french fries taste worse over time?</h2>
+<ul>
+<li class="fragment next">How do we define ‘tasting well’?</li>
+<li class="fragment next">Higher values of potato-y and buttery, lower values of grassy, rancid, painty</li>
+<li class="fragment next">Compute averages of these scales for each time point</li>
+<li class="fragment next">combination of <code>group_by</code> and <code>summarise</code></li>
+</ul>
+</section><section id="did-the-french-fries-taste-worse-over-time-2" class="slide level2">
+<h2>Did the french fries taste worse over time? (2)</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">french_fries %&gt;%<span class="st"> </span><span class="kw">group_by</span>(time) %&gt;%<span class="st"> </span><span class="kw">summarise</span>(
+  <span class="dt">m.potato =</span> <span class="kw">mean</span>(potato, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+  <span class="dt">m.buttery =</span> <span class="kw">mean</span>(buttery, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+  <span class="dt">m.grassy =</span> <span class="kw">mean</span>(grassy, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+  <span class="dt">m.rancid =</span> <span class="kw">mean</span>(rancid, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
+  <span class="dt">m.painty =</span> <span class="kw">mean</span>(painty, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)
+) %&gt;%<span class="st"> </span><span class="kw">head</span>()</code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   time  m.potato m.buttery m.grassy m.rancid m.painty
+##   &lt;fct&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+## 1 1         8.56      2.24    0.942     2.36     1.65
+## 2 2         8.06      2.72    1.18      2.85     1.44
+## 3 3         7.80      2.10    0.750     3.72     1.31
+## 4 4         7.71      1.80    0.742     3.60     1.37
+## 5 5         7.33      1.64    0.635     3.53     2.02
+## 6 6         6.67      1.75    0.674     4.08     2.34</code></pre>
+</section><section id="did-the-french-fries-taste-worse-over-time-3" class="slide level2">
+<h2>Did the french fries taste worse over time? (3)</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">avgs %&gt;%<span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">y =</span> m.potato)) +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape=</span><span class="dv">2</span>, <span class="kw">aes</span>(<span class="dt">y=</span>m.rancid)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Average&quot;</span>)</code></pre></div>
+<p><img src="01_dplyr_files/figure-revealjs/unnamed-chunk-11-1.png" width="768" /></p>
+</section><section id="your-turn" class="slide level2 white">
+<h2>Your turn</h2>
+<p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
+<p><span style="color:white">For this your turn use the <code>french_fries</code> data from the <code>reshape2</code> package: <code>data(french_fries, package=&quot;reshape2&quot;)</code> </span></p>
+<ul>
+<li><span style="color:white">Do ratings of potato-y show a difference between the different oils over time?</span></li>
+<li><span style="color:white">Draw a plot of the average potato-y rating by time, color by treatment.</span></li>
+<li><span style="color:white">How does this plot look like for the rancid rating?</span></li>
+</ul>
+<span style="color:white">
+<p style="font-size:20px">
+Solution in <code>learnr::run_tutorial(&quot;dplyr&quot;, package=&quot;yourturns480&quot;)</code>
+</p>
+<p></span></p>
+</section><section id="your-turn-1" class="slide level2 white">
+<h2>Your turn</h2>
+<p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
+<p><span style="color:white">For this your turn use the <code>french_fries</code> data from the <code>reshape2</code> package: <code>data(french_fries, package=&quot;reshape2&quot;)</code> </span></p>
+<ul>
+<li><span style="color:white">Do ratings of potato-y show a difference between the different oils over time?</span></li>
+<li><span style="color:white">Draw a plot of the average potato-y rating by time, color by treatment.</span></li>
+<li><span style="color:white">How does this plot look like for the rancid rating?</span></li>
+</ul>
+<span style="color:white">
+<p style="font-size:20px">
+Solution in <code>learnr::run_tutorial(&quot;dplyr&quot;, package=&quot;yourturns480&quot;)</code>
+</p>
+<p></span></p>
+</section>
+
+  <!--
+  To hide progress bar from entire presentation
+  just remove “progress” element.
+  -->
+  <!-- <div class="progress"></div> -->
+  <script src="01_dplyr_files/rmdshower/node_modules/shower/node_modules/shower-core/shower.min.js"></script>
+  <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+  <!-- Photos by John Carey, fiftyfootshadows.net -->
+
+    <script>renderMathInElement(document.body);</script>
+  
+  
+</body>
+</html>
