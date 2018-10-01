@@ -37,7 +37,7 @@
 
 10/02 [Lecture 3-1-dplyr](03_tidyverse\01_dplyr.html)
 
-10/02 [Lecture 3-1-dplyr example](03_tidyverse\02_dplyr-examples.html)
+10/02 [Lecture 3-1-dplyr example 1](03_tidyverse\02_dplyr-examples.html)
 
 ## Labs
 
