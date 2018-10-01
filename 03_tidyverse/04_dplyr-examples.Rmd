@@ -92,6 +92,4 @@ avgs %>% ggplot(aes(x = time)) +
 - <span style="color:white">Draw a plot of the average potato-y rating by time, color by treatment.</span>
 - <span style="color:white">How does this plot look like for the rancid rating?</span>
 
-<span style="color:white"><p style="font-size:20px">Solution in `learnr::run_tutorial("dplyr", package="yourturns480")`</p></span>
-
-
+<!---<span style="color:white"><p style="font-size:20px">Solution in `learnr::run_tutorial("dplyr", package="yourturns480")`</p></span>-->
