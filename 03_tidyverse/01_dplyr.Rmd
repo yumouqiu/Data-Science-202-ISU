@@ -1,6 +1,6 @@
 ---
 title: "The dplyr package"
-author: Heike Hofmann
+author: Yumou Qiu
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -73,7 +73,7 @@ Consequences:
 ## Using the pipe `%>%`
 
 ```
-ggplot(data = filter(fbi, Type=="Murder.and.nonnegligent.Manslaughter", 
+ggplot(data = filter(fbi, Type=="Murder.and.nonnegligent.Manslaughter"), 
 aes(x = Year, y = Count)) + geom_point()
 ```
 
