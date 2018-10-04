@@ -133,6 +133,21 @@ happy %>% group_by(sex) %>% summarise(
 - <span style="color:white">How are financial relations associated with average happiness levels? Is this association different for men and women?</span><br><br>
 - <span style="color:white">Find a plot that shows the differences for each one of the summaries.</span>
 
+```{r}
+happy1 = happy %>% mutate(age = as.factor(age))
+happy.age = happy1 %>% group_by(age) %>% summarise(m.happy.age = mean(as.numeric(happy), na.rm = TRUE))
+happy.age = happy.age %>% mutate(AGE = as.numeric(as.character(age)))
+happy.age %>% ggplot(aes(x = AGE, y = m.happy.age)) + geom_point()
+
+happy %>% group_by(partyid) %>% summarise(m.happy = mean(as.numeric(happy), na.rm = TRUE)) %>% arrange(m.happy)
+
+happy %>% group_by(finrela) %>% summarise(m.happy = mean(as.numeric(happy), na.rm = TRUE)) %>% arrange(m.happy)
+happy.fin.sex = happy %>% group_by(finrela, sex) %>% summarise(m.happy = mean(as.numeric(happy), na.rm = TRUE)) %>% arrange(m.happy)
+library(ggmosaic)
+#happy.fin.sex %>% ggplot()  + geom_mosaic(aes(x = product(finrela), fill=sex, weight = m.happy))
+happy.fin.sex %>% ggplot(aes(x = finrela, fill = sex)) + geom_bar(aes(weight = m.happy), position = position_dodge())
+```
+
 ## Your turn: asking questions {.white}
 
 <img class="cover" src="images/blue.jpeg" alt="" width=2000>
@@ -141,6 +156,21 @@ happy %>% group_by(sex) %>% summarise(
 
 - <span style="color:white">Investigate what other variable(s) might be associated with happiness. Plot it.</span>
 - <span style="color:white">Submit your code in Canvas for one point of extra credit.</span>
+
+```{r}
+happy.martial.sex = happy %>% group_by(marital, sex) %>% summarise(m.happy = mean(as.numeric(happy), na.rm = TRUE)) %>% arrange(m.happy)
+happy.martial.sex %>% ggplot(aes(x = marital, fill = sex)) + geom_bar(aes(weight = m.happy), position = position_dodge()) + labs(title = "Happiness on martial and gender", y = "Happiness")
+```
+
+
+```{r}
+happy = happy %>% filter(!is.na(age), !is.na(marital), !is.na(finrela), !is.na(happy))
+happy = happy %>% mutate(agegroup = 1 * (age <= 25) + 2 * (age > 25 & age <= 55) + 3 * (age > 55))
+happy = happy %>% mutate(agegroup = factor(agegroup))
+levels(happy$agegroup) = c("age <= 25", "25 < age <= 55", "age > 55")
+happy.martial.fin.age = happy %>% group_by(marital, agegroup, finrela) %>% summarise(m.happy = mean(as.numeric(happy), na.rm = TRUE), n = n()) %>% arrange(m.happy)
+happy.martial.fin.age %>% ggplot(aes(x = marital, fill = finrela)) + geom_bar(aes(weight = m.happy), position = position_dodge()) + facet_grid(.~agegroup) + labs(title = "Happiness on martial, finance and age", y = "Happiness")
+```
 
 ## Helper functions (1)
 

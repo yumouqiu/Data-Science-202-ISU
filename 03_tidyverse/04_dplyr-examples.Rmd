@@ -93,3 +93,24 @@ avgs %>% ggplot(aes(x = time)) +
 - <span style="color:white">How does this plot look like for the rancid rating?</span>
 
 <!---<span style="color:white"><p style="font-size:20px">Solution in `learnr::run_tutorial("dplyr", package="yourturns480")`</p></span>-->
+
+```{r}
+avgs.time.trt <- french_fries %>% group_by(time, treatment) %>% summarise(
+  m.potato = mean(potato, na.rm=TRUE),
+  m.buttery = mean(buttery, na.rm=TRUE),
+  m.grassy = mean(grassy, na.rm=TRUE),
+  m.rancid = mean(rancid, na.rm=TRUE),
+  m.painty = mean(painty, na.rm=TRUE)
+)
+
+french_fries %>% ggplot(aes(x = time, y = potato)) + 
+  geom_point(aes(color = treatment))
+
+avgs.time.trt %>% ggplot(aes(x = time, y = m.potato)) + 
+  geom_point(aes(color = treatment)) + 
+  ylab("Average")
+
+avgs.time.trt %>% ggplot(aes(x = time, y = m.rancid)) + 
+  geom_point(aes(color = treatment)) + 
+  ylab("Average")
+```
