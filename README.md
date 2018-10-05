@@ -61,5 +61,7 @@
 
 09/20 [Homework 3 (due 09/28)](Homework\homework03.html)
 
+10/05 [Homework 4 (due 10/16)](Homework\homework04.html)
+
 ## Acknowledgement
 Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciates Dr. Hofmann shares the notes, examples, ect., which help preparing the course. 
