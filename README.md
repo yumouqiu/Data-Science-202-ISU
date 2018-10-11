@@ -53,6 +53,8 @@
 
 09/27 [Lab 3](Lab\lab03.html)
 
+10/11 [Lab 4](Lab\lab04.html)
+
 ## Homework
 
 08/28 [Homework 1 (due 09/04)](Homework\homework01.html)
