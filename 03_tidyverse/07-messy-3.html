@@ -169,15 +169,28 @@
 <li><span style="color:white">Second: for the key variable(s) use <code>summarize</code> to find the first time a movie shows up in the box office and find the related number of weeks. </span></li>
 </ul>
 <p><br><br><br><br><br><br><br><br></p>
-</section><section id="key-variables" class="slide level2">
-<h2>Key variables</h2>
-<p>Does <code>Movie</code> uniquely describe a movie?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">movies &lt;-<span class="st"> </span>box <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Movie, Distributor) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">unique</span>()</code></pre></div>
-<p>Does that make a movie unique?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">movies <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(Movie) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n))</code></pre></div>
-<pre><code>## # A tibble: 3,473 x 2
+<!---
+
+## Key variables 
+
+Does `Movie` uniquely describe a movie?
+
+
+```r
+movies <- box %>% select(Movie, Distributor) %>% unique()
+```
+
+Does that make a movie unique?
+
+
+```r
+movies %>% count(Movie) %>% arrange(desc(n))
+```
+
+```
+## # A tibble: 3,473 x 2
 ##    Movie                    n
-##    &lt;chr&gt;                &lt;int&gt;
+##    <chr>                <int>
 ##  1 Beauty and the Beast     2
 ##  2 Blood Feast              2
 ##  3 Breathe                  2
@@ -188,33 +201,49 @@
 ##  8 Gold                     2
 ##  9 Holy Hell                2
 ## 10 Leviathan                2
-## # ... with 3,463 more rows</code></pre>
-</section><section id="movie-data---take-2" class="slide level2">
-<h2>Movie data - take 2</h2>
-<p>Get the Week info for the first time we see each Movie and Distributor combo:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">movies &lt;-<span class="st"> </span>box <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Movie, Distributor) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">  </span><span class="kw">summarise</span>(
-    <span class="dt">firstDate =</span> Date[<span class="kw">which.min</span>(Week)], 
-    <span class="dt">firstWeek =</span> <span class="kw">min</span>(Week, <span class="dt">na.rm=</span><span class="ot">TRUE</span>),
-    <span class="dt">theater =</span> Thtrs.[<span class="kw">which.min</span>(Week)])
-<span class="kw">head</span>(movies)</code></pre></div>
-<pre><code>## # A tibble: 6 x 5
+## # ... with 3,463 more rows
+```
+
+## Movie data - take 2
+
+
+Get the Week info  for the first time we see  each Movie and Distributor combo:
+
+
+```r
+movies <- box %>% group_by(Movie, Distributor) %>% 
+  summarise(
+    firstDate = Date[which.min(Week)], 
+    firstWeek = min(Week, na.rm=TRUE),
+    theater = Thtrs.[which.min(Week)])
+head(movies)
+```
+
+```
+## # A tibble: 6 x 5
 ## # Groups:   Movie [6]
 ##   Movie                 Distributor          firstDate  firstWeek theater
-##   &lt;chr&gt;                 &lt;chr&gt;                &lt;date&gt;         &lt;dbl&gt;   &lt;dbl&gt;
+##   <chr>                 <chr>                <date>         <dbl>   <dbl>
 ## 1 ’71                   Roadside Attractions 2015-02-27         1       4
 ## 2 [REC] 4: Apocalypse   Magnolia Pictures    2015-01-02         1       5
 ## 3 1,000 Rupee Note      Kino Lorber          2016-09-23         1       1
 ## 4 1,000 Times Goodnight Film Movement        2014-10-24         1      24
 ## 5 10 Cloverfield Lane   Paramount Pictures   2016-03-11         1    3391
-## 6 10 Days in a Madhouse Cafe Pictures        2015-11-20         2      10</code></pre>
-</section><section id="looking-into-inconsistencies" class="slide level2">
-<h2>Looking into inconsistencies</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">movies <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(Movie) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">n =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(<span class="kw">desc</span>(n))</code></pre></div>
-<pre><code>## # A tibble: 3,496 x 6
+## 6 10 Days in a Madhouse Cafe Pictures        2015-11-20         2      10
+```
+
+## Looking into inconsistencies
+
+
+```r
+movies %>% group_by(Movie) %>% mutate(n = n()) %>% arrange(desc(n))
+```
+
+```
+## # A tibble: 3,496 x 6
 ## # Groups:   Movie [3,473]
 ##    Movie             Distributor        firstDate  firstWeek theater     n
-##    &lt;chr&gt;             &lt;chr&gt;              &lt;date&gt;         &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;
+##    <chr>             <chr>              <date>         <dbl>   <dbl> <int>
 ##  1 Beauty and the B… Lopert Pictures C… 2016-02-12         1       1     2
 ##  2 Beauty and the B… Walt Disney        2017-03-17         1    4210     2
 ##  3 Blood Feast       Crimson Forest En… 2018-04-06        42       1     2
@@ -225,15 +254,22 @@
 ##  8 Champion          Well Go USA        2018-05-11         1       2     2
 ##  9 Concussion        Radius             2013-10-04         1       2     2
 ## 10 Concussion        Sony Pictures      2015-12-25         1    2841     2
-## # ... with 3,486 more rows</code></pre>
-</section><section id="using-imdb" class="slide level2">
-<h2>Using IMDb</h2>
-<ul>
-<li>Girlhood is the name of two movies - one that was released in 2003, one in 2014; most likely the Oct 4 boxoffice mention is only mistakenly referring to the 2003 movie</li>
-<li>Mama Africa refers to two movies, one released in 2002, one in 2011; likely the duplicate on Jan 19 is erroneous, but we still don’t know which of the two movies is showing (in 1 theater)</li>
-</ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">box <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Movie<span class="op">==</span><span class="st">&quot;Mama Africa&quot;</span>)</code></pre></div>
-<pre><code>##   Rank Rank.Last.Week       Movie           Distributor Gross Change
+## # ... with 3,486 more rows
+```
+
+
+## Using IMDb
+
+- Girlhood is the name of two movies - one that was released in 2003, one in 2014; most likely the Oct 4 boxoffice mention is only mistakenly referring to the 2003 movie
+- Mama Africa refers to two movies, one released in 2002, one in 2011; likely the duplicate  on Jan 19 is erroneous, but we still don't know which of the two movies is showing (in 1 theater)
+
+
+```r
+box %>% filter(Movie=="Mama Africa")
+```
+
+```
+##   Rank Rank.Last.Week       Movie           Distributor Gross Change
 ## 1   88             79 Mama Africa ArtMattan Productions   481    -72
 ## 2   79             67 Mama Africa ArtMattan Productions  1689    -52
 ## 3   67             NA Mama Africa ArtMattan Productions  3495     NA
@@ -242,15 +278,17 @@
 ## 1      2       241   9.808e-05    3 2018-02-02
 ## 2      2       845   8.123e-05    2 2018-01-26
 ## 3      1      3495   3.495e-05    1 2018-01-19
-## 4      1      3187   3.187e-05  816 2018-01-19</code></pre>
-</section><section id="section" class="slide level2">
-<h2></h2>
-<ul>
-<li>Normalization helps identify inconsistencies in data</li>
-<li>Checking up on inconsistencies is a lot of manual labor</li>
-</ul>
+## 4      1      3187   3.187e-05  816 2018-01-19
+```
+
+## 
+
+- Normalization helps identify inconsistencies in data
+- Checking up on inconsistencies is a lot of manual labor
+
+--->
 </section>
- 
+
   <!--
   To hide progress bar from entire presentation
   just remove “progress” element.

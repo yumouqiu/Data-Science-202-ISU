@@ -47,7 +47,7 @@
 
 10/16 [Lecture 3-1-tidyr II](03_tidyverse\06_tidyr.html)
 
-10/16 [Lecture 3-1-tidyr III](03_tidyverse\07_tidyr.html)
+10/16 [Lecture 3-1-tidyr III](03_tidyverse\07-messy-3.html)
 
 ## Labs
 
