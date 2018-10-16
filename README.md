@@ -43,7 +43,11 @@
 
 10/04 [Lecture 3-1-dplyr example 3](03_tidyverse\04_dplyr-examples.html)
 
-10/09 [Lecture 3-1-tidyr](03_tidyverse\05_tidyr.html)
+10/09 [Lecture 3-1-tidyr I](03_tidyverse\05_tidyr.html)
+
+10/16 [Lecture 3-1-tidyr II](03_tidyverse\06_tidyr.html)
+
+10/09 [Lecture 3-1-tidyr III](03_tidyverse\07_tidyr.html)
 
 ## Labs
 
