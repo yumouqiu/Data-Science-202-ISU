@@ -1,6 +1,6 @@
 ---
 title: "DS 202 -  cleaning data: messy 3"
-author: Heike Hofmann
+author: Yumou Qiu
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -136,6 +136,8 @@ Let's also keep track of how many weeks a movie has been released at that time (
 
 <br><br><br><br><br><br><br><br>
 
+<!---
+
 ## Key variables 
 
 Does `Movie` uniquely describe a movie?
@@ -183,3 +185,5 @@ box %>% filter(Movie=="Mama Africa")
 
 - Normalization helps identify inconsistencies in data
 - Checking up on inconsistencies is a lot of manual labor
+
+--->
