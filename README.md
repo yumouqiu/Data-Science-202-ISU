@@ -37,17 +37,19 @@
 
 10/02 [Lecture 3-1-dplyr](03_tidyverse\01_dplyr.html)
 
-10/02 [Lecture 3-1-dplyr example 1](03_tidyverse\02_dplyr-examples.html)
+10/02 [Lecture 3-2-dplyr example 1](03_tidyverse\02_dplyr-examples.html)
 
-10/04 [Lecture 3-1-dplyr example 2](03_tidyverse\03_dplyr-examples.html)
+10/04 [Lecture 3-3-dplyr example 2](03_tidyverse\03_dplyr-examples.html)
 
-10/04 [Lecture 3-1-dplyr example 3](03_tidyverse\04_dplyr-examples.html)
+10/04 [Lecture 3-4-dplyr example 3](03_tidyverse\04_dplyr-examples.html)
 
-10/09 [Lecture 3-1-tidyr I](03_tidyverse\05_tidyr.html)
+10/09 [Lecture 3-5-tidyr-messy I](03_tidyverse\05_tidyr.html)
 
-10/16 [Lecture 3-1-tidyr II](03_tidyverse\06_tidyr.html)
+10/16 [Lecture 3-6-tidyr-messy II](03_tidyverse\06_tidyr.html)
 
-10/16 [Lecture 3-1-tidyr III](03_tidyverse\07-messy-3.html)
+10/18 [Lecture 3-7-messy III](03_tidyverse\07-messy-3.html)
+
+10/18 [Lecture 3-8-messy IV](03_tidyverse\08-messy-4.html)
 
 ## Labs
 
