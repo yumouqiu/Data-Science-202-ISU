@@ -1,6 +1,6 @@
 ---
 title: "DS 202 -  cleaning data: messy 4"
-author: "Heike Hofmann"
+author: "Yumou Qiu"
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
