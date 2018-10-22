@@ -49,7 +49,9 @@
 
 10/18 [Lecture 3-7-messy III](03_tidyverse\07-messy-3.html)
 
-10/18 [Lecture 3-8-messy IV](03_tidyverse\08-messy-4.html)
+10/23 [Lecture 3-8-messy IV](03_tidyverse\08-messy-4.html)
+
+10/23 [Lecture 3-9-messy V](03_tidyverse\09_missing-values.html)
 
 ## Labs
 
@@ -60,6 +62,8 @@
 09/27 [Lab 3](Lab\lab03.html)
 
 10/11 [Lab 4](Lab\lab04.html)
+
+10/25 [Lab 5](Lab\lab05.html)
 
 ## Homework
 
