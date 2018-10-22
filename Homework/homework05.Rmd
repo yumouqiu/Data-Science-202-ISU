@@ -1,0 +1,48 @@
+---
+title: 'Homework #5'
+author: "Your Name"
+date: "10/21/2018"
+output: html_document
+---
+---
+title: 'Homework #5'
+author: "Your Name"
+date: "10/21/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Monthly Voter Registration in Iowa
+#### Due: 10/30/2018 before 11pm. Submit in Canvas (file upload).
+
+This dataset contains the spirits purchase information of Iowa Class “E” liquor licensees by product and date of purchase from January 1, 2012 to current. The dataset can be used to analyze total spirits sales in Iowa of individual products at the store level.
+
+For all of the questions use functionality from the  `tidyverse` whenever possible.
+
+1. Download the RMarkdown file with these homework instructions to use as a template for your work.
+Make sure to replace "Your Name" in the YAML with your name.
+2. Download the data `State_of_Iowa_-_Monthly_Voter_Registration_Totals_by_County.csv` from CANVAS.
+3. Data cleaning: 
+  - extract geographic latitude and longitude from the variable `Primary County Coordinates`
+  - check variable types, any variables that need to be converted to a different type?
+  - extract year, month and day from the variable `Date`
+4. For the most recent month, make a geographic graph with the `Latitude` and `Longtitude`, colored by the rate of `Republican - Active` out of the `Grand Total`
+5. Data exploration 1:
+  - Create variables for the percentages of `Democrat - Active`, `Republican - Active`, `No Party - Active`, `Democrat - Inactive`, `Republican - Inactive`, `No Party - Inactive` out of `Grand Total`
+  - Based on the original data, use the `gather` function to creat a long version of the data such that the above six percentages are under one variable named `percentages` with another variable to indicate their types
+  - Make a bar chart to show the distribution of the percentages for the counties `Adair`, `Boone`, `Dubuque`, `Des Moines`, `Story`. Set the bars for different percentages side by side with different colors
+  - Repeat the same plot above, but facet by four selected years
+6. Data exploration 2:
+  - Based on the original data, create a new varible to indicate the differences between Republican and Democrat actives, divided by the grand total
+  - Focus on this difference of percentages and the five counties `Adair`, `Boone`, `Dubuque`, `Des Moines`, `Story`, reshape the data such that each county is in a separate column
+  - Obtain the average of this percentage for each selected county for each year
+  - Make a scatter plot to show the change of the average percentage over years. Include all the five counties in one plot with different color and different shape of the points
+
+
+Note: your submission is supposed to be fully reproducible, i.e. the TA and I will 'knit' your submission in RStudio. 
+
+
+For the submission: submit your solution in an R Markdown file and (just for insurance) submit the corresponding html (or Word) file with it. 
