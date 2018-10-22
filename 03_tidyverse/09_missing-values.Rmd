@@ -1,6 +1,6 @@
 ---
 title: "DS 202 -  working with missing values"
-author: "Heike Hofmann"
+author: "Yumou Qiu"
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -41,6 +41,12 @@ is.na(x)
 
 - DANGER ZONE: `na.omit` removes all instances of mising values in an object (all rows with any missing value in case `x` is a data frame)
 - Many functions have parameter `na.rm`
+
+```{r}
+DF <- data.frame(x = c(1, 2, 3), y = c(0, 10, NA))
+DF
+na.omit(DF)
+```
 
 ## Your turn (10 mins) {.white}
 
