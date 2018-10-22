@@ -1,0 +1,73 @@
+---
+title: "DS 202 - lab #5: Drunk Driving and Fatal Accidents "
+author: "Yumou Qiu"
+ratio: 16x10
+output:
+  rmdshower::shower_presentation:
+    self_contained: false
+    katex: true
+    theme: ribbon
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Lab #5: Accident data
+
+
+## Outline
+
+- Find your team members
+- Create an R markdown file that contains all code to read the data and create the plots
+- Submit!
+
+
+# Find your team members
+
+
+## FARS data
+
+- US Department of transportation is keeping a record of every accident that results in a fatality in the FARS Data base (fatal accident report system, http://www.nhtsa.gov/FARS)
+- FARS consists of 20+ tables consisting of various aspects of each accident
+Documentation at
+- https://www-fars.nhtsa.dot.gov/Main/index.aspx
+- three of the main tables are `accident`, `person`, and `vehicle`, stored in the data foler of our CANVAS page
+
+## Data Background (2)
+
+- Data of the three main tables is made available from our website.
+- Load the accident data, plot latitude and longitude on a map.
+- Variable names of the `accident.csv`:
+
+```{r, echo = FALSE}
+acc <- read.csv("https://raw.githubusercontent.com/DS202-at-ISU/labs/master/data/fars2016/accident.csv", stringsAsFactors = FALSE)
+names(acc)
+```
+
+## Part one: Accident data
+
+- are there some days of the week where more accidents happen than on others (use variable DAY_WEEK)?
+- what time of the day do accidents happen (use variable HOUR)?
+- what is the number of accidents with at least one drunk driver (use variable DRUNK_DR)?
+
+## Part two: Connecting data
+
+- Connect to the [person table](https://raw.githubusercontent.com/DS202-at-ISU/labs/master/data/fars2016/person.csv). Identify drivers (PER_TYP == 1, see fars manual ) and subset on them.
+- Join accident and driver table (work out which variable(s) to use)
+- Tally the number of accidents by day of the week (DAY_WEEK), hour of the day (HOUR) and gender (SEX). Visualize the results!
+
+
+## Submission
+
+In Canvas, submit an RMarkdown file (and the knitted html document) with: 
+
+  a. the names of all team members that worked on the document.
+  b. a link to the github repo you were working in.
+  c. code and answers to all of the questions.
+  d. you can upload the data file, but you don't have to
+
+
+Due date: You have time until Monday at 10 pm to submit the final RMmarkdown file.
+
+
