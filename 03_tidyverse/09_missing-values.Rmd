@@ -60,4 +60,13 @@ na.omit(DF)
 - <span style="color:white">Why does the following statement fail? <br>
 `box$Rank.Last.Week <- na.omit(box$Rank.Last.Week)` </span>
 
+```{r}
+library(classdata)
+sum(is.na(box))
+colSums(is.na(box))
 
+box %>% filter(is.na(Rank.Last.Week) == TRUE) %>% select(Rank, Rank.Last.Week)
+
+dim(box)
+dim(na.omit(box))
+```
