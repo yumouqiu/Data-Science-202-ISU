@@ -85,9 +85,10 @@
 <li>order of letters determines how strings are parsed</li>
 <li>separators are automatically determined, then assumed to be the same</li>
 </ul>
-<p>Example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mdy</span>(<span class="st">&quot;03-01-2018&quot;</span>)</code></pre></div>
 <pre><code>## [1] &quot;2018-03-01&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dmy</span>(<span class="st">&quot;03-01-2018&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2018-01-03&quot;</code></pre>
 </section><section id="your-turn" class="slide level2 white">
 <h2>Your Turn</h2>
 <p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
@@ -114,14 +115,14 @@
 <li>Durations are potentially of relative length (months, leap year, leap second, …)</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">end_date &lt;-<span class="st"> </span><span class="kw">now</span>()
-<span class="co"># span is interval, years(1) is duration</span>
 span &lt;-<span class="st"> </span>end_date <span class="op">-</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>)
 span</code></pre></div>
-<pre><code>## [1] &quot;2017-10-23 09:51:12 CDT&quot;</code></pre>
+<pre><code>## [1] &quot;2017-10-23 10:17:18 CDT&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">end_date <span class="op">-</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">10</span>)</code></pre></div>
-<pre><code>## [1] &quot;2018-10-13 09:51:12 CDT&quot;</code></pre>
+<pre><code>## [1] &quot;2018-10-13 10:17:18 CDT&quot;</code></pre>
 </section><section id="example-movies" class="slide level2">
 <h2>Example: Movies</h2>
+<p>The date variable can be treated as numeric variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(classdata)
 <span class="kw">summary</span>(box<span class="op">$</span>Date) <span class="co"># date variable: allows date calculus</span></code></pre></div>
 <pre><code>##         Min.      1st Qu.       Median         Mean      3rd Qu. 
@@ -130,6 +131,7 @@ span</code></pre></div>
 ## &quot;2018-08-24&quot;</code></pre>
 </section><section id="example-movies-contd" class="slide level2">
 <h2>Example: Movies (cont’d)</h2>
+<p>The date variable can be treated as numeric variables.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
 
 box <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">7</span>)</code></pre></div>

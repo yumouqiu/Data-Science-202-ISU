@@ -34,9 +34,9 @@ library(lubridate)
 - order of letters determines how strings are parsed
 - separators are automatically determined, then assumed to be the same
 
-Example:
 ```{r message=FALSE}
 mdy("03-01-2018")
+dmy("03-01-2018")
 ```
 
 ## Your Turn {.white}
@@ -68,7 +68,6 @@ wday(now(), label = TRUE)
 
 ```{r}
 end_date <- now()
-# span is interval, years(1) is duration
 span <- end_date - years(1)
 span
 end_date - days(10)
@@ -77,6 +76,8 @@ end_date - days(10)
 
 ## Example: Movies
 
+The date variable can be treated as numeric variables.
+
 ```{r, message=FALSE}
 library(classdata)
 summary(box$Date) # date variable: allows date calculus
@@ -84,6 +85,8 @@ summary(box$Date) # date variable: allows date calculus
 
 
 ## Example: Movies (cont'd)
+
+The date variable can be treated as numeric variables.
 
 ```{r, fig.height = 3.25}
 library(tidyverse)
