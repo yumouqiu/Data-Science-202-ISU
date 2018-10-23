@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DS 202 - Date and Time</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="02_time-series_files/rmdshower/node_modules/shower-ribbon/styles/screen-4x3.css">
+  <link rel="stylesheet" href="02_time-series_files/rmdshower/style-common.css">
+  <link rel="stylesheet" href="02_time-series_files/rmdshower/style-ribbon.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="02_time-series_files/rmdshower/auto-render.min.js" type="text/javascript"></script>
+  
+  
+    <style type="text/css">
+   div.sourceCode { overflow-x: auto; }
+   table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+     margin: 0; padding: 0; vertical-align: baseline; border: none; }
+   table.sourceCode { width: 100%; line-height: 100%; }
+   td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+   td.sourceCode { padding-left: 5px; }
+   code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+   code > span.dt { color: #902000; } /* DataType */
+   code > span.dv { color: #40a070; } /* DecVal */
+   code > span.bn { color: #40a070; } /* BaseN */
+   code > span.fl { color: #40a070; } /* Float */
+   code > span.ch { color: #4070a0; } /* Char */
+   code > span.st { color: #4070a0; } /* String */
+   code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+   code > span.ot { color: #007020; } /* Other */
+   code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+   code > span.fu { color: #06287e; } /* Function */
+   code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+   code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+   code > span.cn { color: #880000; } /* Constant */
+   code > span.sc { color: #4070a0; } /* SpecialChar */
+   code > span.vs { color: #4070a0; } /* VerbatimString */
+   code > span.ss { color: #bb6688; } /* SpecialString */
+   code > span.im { } /* Import */
+   code > span.va { color: #19177c; } /* Variable */
+   code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+   code > span.op { color: #666666; } /* Operator */
+   code > span.bu { } /* BuiltIn */
+   code > span.ex { } /* Extension */
+   code > span.pp { color: #bc7a00; } /* Preprocessor */
+   code > span.at { color: #7d9029; } /* Attribute */
+   code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+   code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+   code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+   code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  
+  
+  
+</head>
+
+<body class="shower list">
+
+  <header class="caption">
+    <h1>DS 202 - Date and Time</h1>
+    <p>Heike Hofmann</p>
+  </header>
+
+    
+  
+<section id="visualizing-time-time-series" class="titleslide slide level1"><h2 class="shout">Visualizing time: time series</h2></section><section id="nasa-data" class="slide level2">
+<h2>NASA data</h2>
+<ul>
+<li><code>nasa</code> is a data set in the <code>GGally</code> package</li>
+<li>it consists of atmospheric measurements across a grid of locations in Middle America</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(nasa, <span class="dt">package=</span><span class="st">&quot;GGally&quot;</span>)
+<span class="kw">head</span>(nasa)</code></pre></div>
+<pre><code>##   time y x   lat      long       date cloudhigh cloudlow cloudmid ozone
+## 1    1 1 1 -21.2 -113.8000 1995-01-01       0.5     31.0      2.0   260
+## 2    1 1 2 -21.2 -111.2957 1995-01-01       1.5     31.5      2.5   260
+## 3    1 1 3 -21.2 -108.7913 1995-01-01       1.5     32.5      3.5   260
+## 4    1 1 4 -21.2 -106.2870 1995-01-01       1.0     39.0      4.0   258
+## 5    1 1 5 -21.2 -103.7826 1995-01-01       0.5     48.0      4.5   258
+## 6    1 1 6 -21.2 -101.2783 1995-01-01       0.0     50.0      2.5   258
+##   pressure surftemp temperature  id day month year
+## 1     1000    297.4       296.9 1-1   0     1 1995
+## 2     1000    297.4       296.5 2-1   0     1 1995
+## 3     1000    297.4       296.0 3-1   0     1 1995
+## 4     1000    296.9       296.5 4-1   0     1 1995
+## 5     1000    296.5       295.5 5-1   0     1 1995
+## 6     1000    296.5       295.0 6-1   0     1 1995</code></pre>
+</section><section id="time-series" class="slide level2">
+<h2>Time series</h2>
+<ul>
+<li>for each observational unit we have multiple measurements:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+nasa <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(x <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, y <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temperature)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="02_time-series_files/figure-revealjs/unnamed-chunk-2-1.png" width="672" /></p>
+</section><section id="time-series-2" class="slide level2">
+<h2>Time series (2)</h2>
+<ul>
+<li>for each observational unit we have multiple measurements,</li>
+<li>which we connect by a line:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nasa <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(x <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, y <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temperature)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
+<p><img src="02_time-series_files/figure-revealjs/unnamed-chunk-3-1.png" width="672" /></p>
+</section><section id="time-series-3" class="slide level2">
+<h2>Time series (3)</h2>
+<ul>
+<li>for each observational unit we have multiple measurements,</li>
+<li>which we connect by a line.</li>
+<li>Each observational unit forms a group, we only connect points within a group by a line.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nasa <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(x <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, y <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">10</span>)) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> time, <span class="dt">y =</span> temperature, <span class="dt">group=</span>id)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
+<p><img src="02_time-series_files/figure-revealjs/unnamed-chunk-4-1.png" width="672" /></p>
+</section><section id="your-turn-6-mins" class="slide level2 white">
+<h2>Your Turn (6 mins)</h2>
+<p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
+<ul>
+<li><span style="color:white">Load the <code>nasa</code> data from the package <code>GGally</code>, </span></li>
+<li><span style="color:white">for one location, draw a time line of Ozone over the time frame (<code>time</code>). </span></li>
+<li><span style="color:white">Plot separate lines for each of the years, i.e. put <code>month</code> on the x-axis and <code>ozone</code> on the y-axis for the same location. Is there a seasonal pattern apparent? </span></li>
+<li><span style="color:white">Pick a location with x in 1:10 and y in 7:10. Plot temperature over time. Comment on the result. </span></li>
+</ul>
+</section><section id="box-office-gross" class="slide level2">
+<h2>Box office gross</h2>
+<ul>
+<li>variables encoded as dates and times work with <code>ggplot2</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(box, <span class="dt">package=</span><span class="st">&quot;classdata&quot;</span>)
+box <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Movie <span class="op">==</span><span class="st"> &quot;The Avengers: Age of Ultron&quot;</span>) <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> Total.Gross)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
+<p><img src="02_time-series_files/figure-revealjs/unnamed-chunk-5-1.png" width="768" /></p>
+</section><section id="box-office-gross-2" class="slide level2">
+<h2>Box office gross (2)</h2>
+<ul>
+<li>We would like to label some of the highest grossing movies</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">box <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> Total.Gross, 
+             <span class="dt">group =</span> <span class="kw">interaction</span>(Movie, Distributor))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>()</code></pre></div>
+<p><img src="02_time-series_files/figure-revealjs/unnamed-chunk-6-1.png" width="768" /></p>
+</section><section id="your-turn-6-mins-1" class="slide level2 white">
+<h2>Your Turn (6 mins)</h2>
+<p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
+<ul>
+<li><span style="color:white">Load the <code>box</code> data from the package <code>classdata</code>, </span></li>
+<li><span style="color:white">For each movie and distributor, find the (1) highest total gross, (2) the last date (and week) the movie was shown in theaters, (3) the gross the movie made in the first week it was released. </span></li>
+</ul>
+</section><section id="labelling-outliers" class="slide level2">
+<h2>Labelling outliers</h2>
+<ul>
+<li><code>geom_text</code> needs aesthetics <code>x</code>, <code>y</code> and <code>label</code></li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">box <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> Total.Gross, 
+             <span class="dt">group =</span> <span class="kw">interaction</span>(Movie, Distributor))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> Total.Gross, <span class="dt">label=</span>Movie), 
+            <span class="dt">data =</span> box_summary <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Total.Gross <span class="op">&gt;</span><span class="st"> </span><span class="fl">2.5e8</span>))</code></pre></div>
+<p><img src="02_time-series_files/figure-revealjs/unnamed-chunk-8-1.png" width="768" /></p>
+</section><section id="labelling-outliers---less-overlap" class="slide level2">
+<h2>Labelling outliers - less overlap</h2>
+<ul>
+<li><code>geom_text_repel</code> from the <code>ggrepel</code> package</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">box <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> Total.Gross, 
+             <span class="dt">group =</span> <span class="kw">interaction</span>(Movie, Distributor))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>() <span class="op">+</span>
+<span class="st">  </span>ggrepel<span class="op">::</span><span class="kw">geom_text_repel</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date, <span class="dt">y =</span> Total.Gross, <span class="dt">label=</span>Movie), 
+            <span class="dt">data =</span> box_summary <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Total.Gross <span class="op">&gt;</span><span class="st"> </span><span class="fl">2.5e8</span>), <span class="dt">colour=</span><span class="st">&quot;grey50&quot;</span>)</code></pre></div>
+<p><img src="02_time-series_files/figure-revealjs/unnamed-chunk-9-1.png" width="768" /> <!--
+## Box office gross (3)
+
+
+
+```r
+box %>% filter(Week <= 5) %>%
+  mutate(Year = year(Date)) %>%
+  ggplot(aes(x = Week, y = Total.Gross, 
+             group = interaction(Movie, Distributor))) + geom_line() +
+  facet_grid(.~Year)
+```
+
+<img src="02_time-series_files/figure-revealjs/unnamed-chunk-10-1.png" width="768" />
+
+--></p>
+</section>
+
+  <!--
+  To hide progress bar from entire presentation
+  just remove “progress” element.
+  -->
+  <!-- <div class="progress"></div> -->
+  <script src="02_time-series_files/rmdshower/node_modules/shower/node_modules/shower-core/shower.min.js"></script>
+  <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+  <!-- Photos by John Carey, fiftyfootshadows.net -->
+
+    <script>renderMathInElement(document.body);</script>
+  
+  
+</body>
+</html>

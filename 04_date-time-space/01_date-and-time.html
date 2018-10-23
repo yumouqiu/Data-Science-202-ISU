@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DS 202 - Date and Time</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="01_date-and-time_files/shower-ribbon/package/styles/screen-4x3.css">
+  <link rel="stylesheet" href="01_date-and-time_files/rmdshower/style-common.css">
+  <link rel="stylesheet" href="01_date-and-time_files/rmdshower/style-ribbon.css">
+  <link rel="stylesheet" href="01_date-and-time_files/shower-ribbon/style-override.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="01_date-and-time_files/rmdshower/auto-render.min.js" type="text/javascript"></script>
+  
+  
+    <style type="text/css">
+   div.sourceCode { overflow-x: auto; }
+   table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+     margin: 0; padding: 0; vertical-align: baseline; border: none; }
+   table.sourceCode { width: 100%; line-height: 100%; }
+   td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+   td.sourceCode { padding-left: 5px; }
+   code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+   code > span.dt { color: #902000; } /* DataType */
+   code > span.dv { color: #40a070; } /* DecVal */
+   code > span.bn { color: #40a070; } /* BaseN */
+   code > span.fl { color: #40a070; } /* Float */
+   code > span.ch { color: #4070a0; } /* Char */
+   code > span.st { color: #4070a0; } /* String */
+   code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+   code > span.ot { color: #007020; } /* Other */
+   code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+   code > span.fu { color: #06287e; } /* Function */
+   code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+   code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+   code > span.cn { color: #880000; } /* Constant */
+   code > span.sc { color: #4070a0; } /* SpecialChar */
+   code > span.vs { color: #4070a0; } /* VerbatimString */
+   code > span.ss { color: #bb6688; } /* SpecialString */
+   code > span.im { } /* Import */
+   code > span.va { color: #19177c; } /* Variable */
+   code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+   code > span.op { color: #666666; } /* Operator */
+   code > span.bu { } /* BuiltIn */
+   code > span.ex { } /* Extension */
+   code > span.pp { color: #bc7a00; } /* Preprocessor */
+   code > span.at { color: #7d9029; } /* Attribute */
+   code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+   code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+   code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+   code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  
+  
+  
+</head>
+
+<body class="shower list">
+
+  <header class="caption">
+    <h1>DS 202 - Date and Time</h1>
+    <p>Yumou Qiu</p>
+  </header>
+
+  
+  
+<section id="working-with-date-and-time" class="titleslide slide level1"><h2 class="shout">Working with date and time</h2></section><section id="lubridate-package" class="slide level2">
+<h2><code>lubridate</code> package</h2>
+<ul>
+<li>package for working with dates and times</li>
+<li>defines different classes of time: instants, periods, intervals, durations</li>
+<li>defines converter and accessor functions, enables time calculus</li>
+</ul>
+</section><section id="converter-functions-and-instants-in-time" class="slide level2">
+<h2>Converter functions and instants in time</h2>
+<ul>
+<li>time instants: one (absolute) moment in time, e.g. <code>now()</code>, <code>Jan-1-2000</code></li>
+<li>easy-to-use converter functions:
+<ul>
+<li>date: <code>ymd</code>, <code>mdy</code>, <code>dmy</code>, …</li>
+<li>time: <code>hm</code>, <code>hms</code>, …</li>
+<li>date &amp; time: <code>ymd_hms</code>, <code>mdy_hm</code>, …</li>
+</ul></li>
+<li>order of letters determines how strings are parsed</li>
+<li>separators are automatically determined, then assumed to be the same</li>
+</ul>
+<p>Example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mdy</span>(<span class="st">&quot;03-01-2018&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;2018-03-01&quot;</code></pre>
+</section><section id="your-turn" class="slide level2 white">
+<h2>Your Turn</h2>
+<p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
+<ul>
+<li><span style="color:white">Create date objects for today’s date by typing the date in text format and converting it with one of the <code>lubridate</code> converter functions. </span></li>
+<li><span style="color:white">Try different formats of writing the date and compare the end results.</span></li>
+</ul>
+</section><section id="accessor-functions" class="slide level2">
+<h2>Accessor functions</h2>
+<ul>
+<li>accessor functions: <code>year</code>, <code>month</code>, <code>week</code>, <code>wday</code>, <code>mday</code>, <code>yday</code>, <code>hour</code>, <code>minute</code>, …</li>
+<li>accessor functions can also be used for setting elements of date and time, e.g. <code>hour(x) &lt;- 12</code></li>
+</ul>
+<p>Examples:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">month</span>(<span class="kw">now</span>())</code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">wday</span>(<span class="kw">now</span>(), <span class="dt">label =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## [1] Tue
+## Levels: Sun &lt; Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat</code></pre>
+</section><section id="intervals-and-durations" class="slide level2">
+<h2>Intervals and Durations</h2>
+<ul>
+<li>Intervals have a <em>start</em> and an <em>end</em> date/time: absolute difference</li>
+<li>Durations are potentially of relative length (months, leap year, leap second, …)</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">end_date &lt;-<span class="st"> </span><span class="kw">now</span>()
+<span class="co"># span is interval, years(1) is duration</span>
+span &lt;-<span class="st"> </span>end_date <span class="op">-</span><span class="st"> </span><span class="kw">years</span>(<span class="dv">1</span>)
+span</code></pre></div>
+<pre><code>## [1] &quot;2017-10-23 09:51:12 CDT&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">end_date <span class="op">-</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">10</span>)</code></pre></div>
+<pre><code>## [1] &quot;2018-10-13 09:51:12 CDT&quot;</code></pre>
+</section><section id="example-movies" class="slide level2">
+<h2>Example: Movies</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(classdata)
+<span class="kw">summary</span>(box<span class="op">$</span>Date) <span class="co"># date variable: allows date calculus</span></code></pre></div>
+<pre><code>##         Min.      1st Qu.       Median         Mean      3rd Qu. 
+## &quot;2013-03-08&quot; &quot;2014-07-25&quot; &quot;2015-12-04&quot; &quot;2015-12-01&quot; &quot;2017-04-14&quot; 
+##         Max. 
+## &quot;2018-08-24&quot;</code></pre>
+</section><section id="example-movies-contd" class="slide level2">
+<h2>Example: Movies (cont’d)</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+
+box <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Date)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span><span class="dv">7</span>)</code></pre></div>
+<p><img src="01_date-and-time_files/figure-revealjs/unnamed-chunk-5-1.png" width="768" /></p>
+</section><section id="example-movies-contd-1" class="slide level2">
+<h2>Example: Movies (cont’d)</h2>
+<p>Is there a seasonal effect in the number of movies in the box office?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lubridate)
+
+box <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">month</span>(Date, <span class="dt">label=</span><span class="ot">TRUE</span>))) <span class="op">+</span><span class="st"> </span><span class="kw">geom_bar</span>()</code></pre></div>
+<p><img src="01_date-and-time_files/figure-revealjs/unnamed-chunk-6-1.png" width="768" /></p>
+</section><section id="your-turn-10-min" class="slide level2 white">
+<h2>Your Turn (10 min)</h2>
+<p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
+<ul>
+<li><span style="color:white">inspect the <code>budget</code> data set from the <code>classdata</code> package, </span></li>
+<li><span style="color:white">make sure the variable <code>Release Date</code> is a date format, </span></li>
+<li><span style="color:white">plot a histogram of the variable. </span></li>
+<li><span style="color:white">merge (<code>join</code>) budget and box office data (by movie name) </span></li>
+<li><span style="color:white">is the time between the release of a movie and the date is equal to the number of weeks in theaters? </span></li>
+</ul>
+</section>
+
+  <!--
+  To hide progress bar from entire presentation
+  just remove “progress” element.
+  -->
+  <!-- <div class="progress"></div> -->
+  <script src="01_date-and-time_files/rmdshower/node_modules/shower/node_modules/shower-core/shower.min.js"></script>
+  <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+  <!-- Photos by John Carey, fiftyfootshadows.net -->
+
+    <script>renderMathInElement(document.body);</script>
+  
+  
+</body>
+</html>

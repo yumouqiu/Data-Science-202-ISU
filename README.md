@@ -53,6 +53,10 @@
 
 10/23 [Lecture 3-9-messy V](03_tidyverse\09_missing-values.html)
 
+10/30 [Lecture 4-1-time](04_date-time-space\01_date-and-time.html)
+
+### November
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
@@ -76,6 +80,12 @@
 10/05 [Homework 4 (due 10/16)](Homework\homework04.html)
 
 10/21 [Homework 5 (due 10/30)](Homework\homework05.html)
+
+## Sample exam
+
+10/23 [Sample exam](exams\exam-sample.html)
+
+10/23 [Sample exam solution](exams\exam-sample-solution.html)
 
 ## Acknowledgement
 Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciates Dr. Hofmann shares the notes, examples, ect., which help preparing the course. 
