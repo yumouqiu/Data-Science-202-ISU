@@ -1,6 +1,6 @@
 ---
 title: "DS 202 - Date and Time"
-author: "Heike Hofmann"
+author: "Yumou Qiu"
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -55,7 +55,7 @@ nasa %>% filter(x == 1, y == 1) %>%
 
 ```{r, fig.width = 7, fig.height = 3}
 nasa %>% filter(x == 1, y %in% c(1, 10)) %>%
-  ggplot(aes(x = time, y = temperature, group=id)) + geom_line()
+  ggplot(aes(x = time, y = temperature, group=id, color = id)) + geom_line()
 ```
 
 ## Your Turn (6 mins) {.white}
@@ -77,7 +77,15 @@ nasa %>% filter(x == 1, y %in% c(1, 10)) %>%
 
 - variables encoded as dates and times work with `ggplot2`
 
-```{r}
+```{r, eval = FALSE}
+data(box, package="classdata")
+box %>% filter(Movie == "The Avengers: Age of Ultron") %>%
+  ggplot(aes(x = Date, y = Total.Gross)) + geom_line()
+```
+
+## Box office gross
+
+```{r, echo = FALSE}
 data(box, package="classdata")
 box %>% filter(Movie == "The Avengers: Age of Ultron") %>%
   ggplot(aes(x = Date, y = Total.Gross)) + geom_line()
@@ -87,9 +95,17 @@ box %>% filter(Movie == "The Avengers: Age of Ultron") %>%
 
 - We would like to label some of the highest grossing movies
 
-```{r}
-box %>% 
-  ggplot(aes(x = Date, y = Total.Gross, 
+```{r, eval = FALSE}
+box %>% filter(Thtrs. > 100) %>%
+  ggplot(aes(x = Date, y = log(Total.Gross), 
+             group = interaction(Movie, Distributor))) + geom_line()
+```
+
+## Box office gross (2)
+
+```{r, echo = FALSE}
+box %>% filter(Thtrs. > 100) %>%
+  ggplot(aes(x = Date, y = log(Total.Gross), 
              group = interaction(Movie, Distributor))) + geom_line()
 ```
 
@@ -103,39 +119,60 @@ box %>%
 - <span style="color:white">For each movie and distributor, find the (1) highest total gross, (2) the last date (and week) the movie was shown in theaters, (3) the gross the movie made in the first week it was released.
 </span>
 
-```{r, echo=FALSE}
-box_summary <- box %>% group_by(Movie, Distributor) %>%
-  summarize(
-    Date = max(Date),
-    Week = max(Week),
-    Total.Gross = max(Total.Gross),
-    Gross = min(Total.Gross)
-  )
+
+
+## Box office gross (corrected)
+
+```{r, echo = FALSE}
+box %>% filter(Thtrs. > 100) %>%
+  ggplot(aes(x = Date, y = Total.Gross.adjust, 
+             group = interaction(Movie, Distributor))) + geom_line()
 ```
 
 ## Labelling outliers
 
 - `geom_text` needs aesthetics `x`, `y` and `label`
 
-```{r}
-box %>% 
-  ggplot(aes(x = Date, y = Total.Gross, 
+```{r, eval = FALSE}
+box %>% filter(Thtrs. > 100) %>%
+  ggplot(aes(x = Date, y = Total.Gross.adjust, 
              group = interaction(Movie, Distributor))) + geom_line() +
-  geom_text(aes(x = Date, y = Total.Gross, label=Movie), 
-            data = box_summary %>% filter(Total.Gross > 2.5e8))
+  geom_text(aes(x = Date, y = Total.Gross.adjust, label = Movie), 
+            data = box_summary %>% filter(Total.Gross.adjust > 2.5e8))
+```
+
+## Labelling outliers
+
+```{r, echo = FALSE}
+box %>% filter(Thtrs. > 100) %>%
+  ggplot(aes(x = Date, y = Total.Gross.adjust, 
+             group = interaction(Movie, Distributor))) + geom_line() +
+  geom_text(aes(x = Date, y = Total.Gross.adjust, label = Movie), 
+            data = box_summary %>% filter(Total.Gross.adjust > 2.5e8))
 ```
 
 ## Labelling outliers - less overlap
 
 - `geom_text_repel` from the `ggrepel` package
 
-```{r}
-box %>% 
-  ggplot(aes(x = Date, y = Total.Gross, 
+```{r, eval = FALSE}
+box %>% filter(Thtrs. > 100) %>%
+  ggplot(aes(x = Date, y = Total.Gross.adjust, 
              group = interaction(Movie, Distributor))) + geom_line() +
-  ggrepel::geom_text_repel(aes(x = Date, y = Total.Gross, label=Movie), 
-            data = box_summary %>% filter(Total.Gross > 2.5e8), colour="grey50")
+  ggrepel::geom_text_repel(aes(x = Date, y = Total.Gross.adjust, label = Movie), 
+            data = box_summary %>% filter(Total.Gross.adjust > 2.5e8), colour="grey50")
 ```
+
+## Labelling outliers - less overlap
+
+```{r, echo = FALSE}
+box %>% filter(Thtrs. > 100) %>%
+  ggplot(aes(x = Date, y = Total.Gross.adjust, 
+             group = interaction(Movie, Distributor))) + geom_line() +
+  ggrepel::geom_text_repel(aes(x = Date, y = Total.Gross.adjust, label = Movie), 
+            data = box_summary %>% filter(Total.Gross.adjust > 2.5e8), colour="grey50")
+```
+
 <!--
 ## Box office gross (3)
 
