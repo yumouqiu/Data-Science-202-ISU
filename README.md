@@ -57,6 +57,10 @@
 
 ### November
 
+11/01 [Lecture 4-2-time series](04_date-time-space\02_time-series.html)
+
+11/01 [Lecture 4-3-layers](04_date-time-space\03_layers.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
