@@ -1,6 +1,6 @@
 ---
 title: "DS 202 - Layers"
-author: "Heike Hofmann"
+author: "Yumou Qiu"
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -21,7 +21,6 @@ library(lubridate)
 
 - grammar of graphics, again
 - layer specifications
-- 
 
 ## Grammar of Graphics
 
@@ -56,7 +55,7 @@ nasa %>% filter(id=="1-1") %>%
 nasa %>% filter(id=="1-1") %>%
   ggplot(aes(x = time, y= temperature)) + geom_point() +
   geom_smooth(method="lm") +
-  geom_text(aes(label=id), colour="darkorange", 
+  geom_text(aes(x = time, y= temperature, label=id), colour="darkorange", 
             data=nasa %>% filter(id=="1-1", time==50))
 ```
 
@@ -76,7 +75,7 @@ each layer has several parts, the two most important are:
 nasa %>% filter(id=="1-1") %>%
   ggplot(aes(x = time, y= temperature)) + geom_point() +
   geom_smooth(method="lm") +
-  geom_text(aes(label=id, colour=id),  
+  geom_text(aes(x = time, y= temperature, label=id, colour=id),  
             data=nasa %>% filter(id=="1-1", time==50))
 ```
 
@@ -86,7 +85,7 @@ nasa %>% filter(id=="1-1") %>%
 nasa %>% filter(id=="1-1") %>%
   ggplot(aes(x = time, y= temperature, colour=id)) + geom_point() +
   geom_smooth(method="lm") +
-  geom_text(aes(label=id), 
+  geom_text(aes(x = time, y= temperature, label=id), 
             data=nasa %>% filter(id=="1-1", time==50))
 ```
 
