@@ -72,6 +72,16 @@ nasa %>% filter(x == 1, y %in% c(1, 10)) %>%
 - <span style="color:white">Pick a location with x in 1:10 and y in 7:10. Plot temperature over time. Comment on the result.
 </span>
 
+```{r}
+nasa %>% filter(x == 1, y %in% c(1, 10)) %>%
+  ggplot(aes(x = time, y = ozone, group = id, color = id)) + geom_line()
+
+nasa %>% filter(x == 1, y == 1) %>%
+  ggplot(aes(x = month(date, label = TRUE), y = ozone, group = year(date), color = year(date))) + geom_line()
+
+nasa %>% filter(x %in% c(1 : 10), y %in% c(7 : 10)) %>%
+  ggplot(aes(x = time, y = temperature, group = id, color = id)) + geom_line()
+```
 
 ## Box office gross
 
@@ -119,7 +129,28 @@ box %>% filter(Thtrs. > 100) %>%
 - <span style="color:white">For each movie and distributor, find the (1) highest total gross, (2) the last date (and week) the movie was shown in theaters, (3) the gross the movie made in the first week it was released.
 </span>
 
+```{r, echo=FALSE}
+box_summary <- box %>% group_by(Movie, Distributor) %>%
+  summarize(
+    Date = max(Date),
+    Week = max(Week),
+    Total.Gross = max(Total.Gross),
+    First.Gross = min(Total.Gross)
+  )
 
+box1 = box_summary %>% filter(year(Date) < 2018)
+box2 = box_summary %>% filter(year(Date) >= 2018)
+
+box$Total.Gross.adjust = box$Total.Gross * 10^8 * (log(box$Total.Gross) < 5) + box$Total.Gross * (log(box$Total.Gross) >= 5) 
+
+box_summary <- box %>% group_by(Movie, Distributor) %>%
+  summarize(
+    Date = max(Date),
+    Week = max(Week),
+    Max.Gross.adjust = max(Total.Gross.adjust),
+    First.Gross.adjust = min(Total.Gross.adjust)
+  )
+```
 
 ## Box office gross (corrected)
 
@@ -137,8 +168,8 @@ box %>% filter(Thtrs. > 100) %>%
 box %>% filter(Thtrs. > 100) %>%
   ggplot(aes(x = Date, y = Total.Gross.adjust, 
              group = interaction(Movie, Distributor))) + geom_line() +
-  geom_text(aes(x = Date, y = Total.Gross.adjust, label = Movie), 
-            data = box_summary %>% filter(Total.Gross.adjust > 2.5e8))
+  geom_text(aes(x = Date, y = Max.Gross.adjust, label = Movie), 
+            data = box_summary %>% filter(Max.Gross.adjust > 2.5e8))
 ```
 
 ## Labelling outliers
@@ -147,8 +178,8 @@ box %>% filter(Thtrs. > 100) %>%
 box %>% filter(Thtrs. > 100) %>%
   ggplot(aes(x = Date, y = Total.Gross.adjust, 
              group = interaction(Movie, Distributor))) + geom_line() +
-  geom_text(aes(x = Date, y = Total.Gross.adjust, label = Movie), 
-            data = box_summary %>% filter(Total.Gross.adjust > 2.5e8))
+  geom_text(aes(x = Date, y = Max.Gross.adjust, label = Movie), 
+            data = box_summary %>% filter(Max.Gross.adjust > 2.5e8))
 ```
 
 ## Labelling outliers - less overlap
@@ -159,8 +190,8 @@ box %>% filter(Thtrs. > 100) %>%
 box %>% filter(Thtrs. > 100) %>%
   ggplot(aes(x = Date, y = Total.Gross.adjust, 
              group = interaction(Movie, Distributor))) + geom_line() +
-  ggrepel::geom_text_repel(aes(x = Date, y = Total.Gross.adjust, label = Movie), 
-            data = box_summary %>% filter(Total.Gross.adjust > 2.5e8), colour="grey50")
+  ggrepel::geom_text_repel(aes(x = Date, y = Max.Gross.adjust, label = Movie), 
+            data = box_summary %>% filter(Max.Gross.adjust > 2.5e8), colour="grey50")
 ```
 
 ## Labelling outliers - less overlap
@@ -169,8 +200,8 @@ box %>% filter(Thtrs. > 100) %>%
 box %>% filter(Thtrs. > 100) %>%
   ggplot(aes(x = Date, y = Total.Gross.adjust, 
              group = interaction(Movie, Distributor))) + geom_line() +
-  ggrepel::geom_text_repel(aes(x = Date, y = Total.Gross.adjust, label = Movie), 
-            data = box_summary %>% filter(Total.Gross.adjust > 2.5e8), colour="grey50")
+  ggrepel::geom_text_repel(aes(x = Date, y = Max.Gross.adjust, label = Movie), 
+            data = box_summary %>% filter(Max.Gross.adjust > 2.5e8), colour="grey50")
 ```
 
 <!--
