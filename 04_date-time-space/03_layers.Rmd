@@ -96,7 +96,7 @@ nasa %>% filter(id=="1-1") %>%
 <img class="cover" src="images/blue.jpeg" alt="" width=2000>
 
 
-- <span style="color:white">Load the `box` data from the package `classdata`,
+- <span style="color:white">Load the `box` data from the package `classdata`, need to adjust the total gross.
 </span>
 - <span style="color:white">Plot a time line for each movie: plot total gross by week that the movie is out. 
 </span>
@@ -104,3 +104,23 @@ nasa %>% filter(id=="1-1") %>%
 </span>
 - <span style="color:white">Color the label of these three movies with a color of your choice.
 </span>
+
+```{r}
+data(box, package="classdata")
+box$Total.Gross.adjust = box$Total.Gross * 10^8 * (log(box$Total.Gross) < 5) + box$Total.Gross * (log(box$Total.Gross) >= 5) 
+
+box_summary <- box %>% group_by(Movie, Distributor) %>%
+  summarize(
+    Date = max(Date),
+    Week = max(Week),
+    Max.Gross.adjust = max(Total.Gross.adjust),
+    First.Gross.adjust = min(Total.Gross.adjust)
+  )
+
+box %>% filter(Total.Gross.adjust > 1 * 10^8 & Week < 100) %>%
+  ggplot(aes(x = Week, y = Total.Gross.adjust, 
+        group = interaction(Movie, Distributor))) + 
+  geom_line() + 
+  geom_text(aes(x = Week, y = Max.Gross.adjust, label = Movie, color = Movie), 
+        data = box_summary %>% arrange(desc(Max.Gross.adjust)) %>% head(3))
+```
