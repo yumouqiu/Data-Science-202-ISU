@@ -32,6 +32,17 @@ output:
 - <span style="color:white">Compare summary of Year to the previous result</span>
 - <span style="color:white">Are there other variables that should be factors (or vice versa)? </span>
 
+```{r}
+dim(fbi)
+
+summary(fbi$Year)
+
+fbi$Year.factor = factor(fbi$Year)
+
+summary(fbi$Year.factor)
+
+```
+
 ## Note: factors in boxplots
 
 boxplots in ggplot2 only work properly if the x variable is a character variable or a factor:
