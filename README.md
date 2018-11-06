@@ -91,5 +91,12 @@
 
 10/23 [Sample exam solution](exams\exam-sample-solution.html)
 
+## Exam (11/06)
+
+- [Exam](exams\Exam-2018.html)
+- [Data 1](exams\Iowa_Liquor_Stores.csv)
+- [Data 2](exams\Story_County_Liquor_Sales_New.csv)
+- [Rmd file](exams\Exam-2018.Rmd)
+
 ## Acknowledgement
 Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciates Dr. Hofmann shares the notes, examples, ect., which help preparing the course. 
