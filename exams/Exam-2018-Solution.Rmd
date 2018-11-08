@@ -1,0 +1,155 @@
+---
+title: "DS 202: Midterm Exam Solution"
+author: "Yumou Qiu"
+date: "10/29/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+For all of the questions below incorporate the necessary R code directy into your answers. You have 70 mins to complete this exam. At the end of the time period, upload your R Markdown file and the corresponding html file to Canvas.
+
+## Story County Liquor Sales
+
+In this exam, we will study the liquor sales in Iowa. We will use two datasets, `Iowa_Liquor_Stores.csv` and `Story_County_Liquor_Sales_New.csv`, which are posted on **Canvas**.
+The first dataset records all the active and inactive liquor stores in Iowa as 2018/10/01. Please see the link https://data.iowa.gov/Economy/Iowa-Liquor-Stores/ykb6-ywnd for the information of the variables. You should be able to answer all of the following questions without the help of this website.
+
+The second dataset contains the spirits purchase information of Iowa Class "E" liquor licensees by product and date of purchase from January 1, 2012 to current. The dataset can be used to analyze total spirits sales in Story county, Iowa of individual products at the store level.
+Class E liquor license, for grocery stores, liquor stores, convenience stores, etc., allows commercial establishments to sell liquor for off-premises consumption in original unopened containers.
+
+We will first consider the **liquor store data `Iowa_Liquor_Stores.csv`**.
+
+### Question #1 (20 points)
+
+- How many records are in the data set, how many variables?
+- How many different cities are included in the dataset? Use `filter()` function in `dplyr` package to identify the cities outside Iowa.
+- Introduce a new logical variable `Inactive` (TRUE or FALSE) based on `Store.Status`. This variable equal to `TRUE` if `Store.Status = "I"`, otherwise, it is `FALSE`. What is the overall percentage of the inactive liquor store? 
+- Use the `group_by()` and `summarise()` functions in `dplyr` package to find this percentage of inactive liquor stores for each city.
+
+```{r, message = FALSE}
+library(tidyverse)
+
+# Q1
+A = read.csv("Iowa_Liquor_Stores.csv", header = TRUE)
+str(A)
+dim(A)
+
+# Q2
+length(unique(A$City))
+A %>% filter(State != "IA") %>% select(-Report.Date, -Store.Address)
+
+# Q3
+A = A %>% mutate(Inactive = (Store.Status == "I"))
+mean(A$Inactive)
+
+# Q4
+A1 = A %>% group_by(City) %>% summarise(ave = mean(Inactive, na.rm=TRUE))
+```
+
+### Question #2 (20 points)
+
+- Create a new variable `City1` which convert `City` to a character variable.
+- Use `filter()` function and the variable `City1` (**NOT `City`**) to select the cities `Albert City, Ames, Boone, Clarion, Clive, Dubuque, Des Moines, Garwin, Iowa City, Jefferson` from the liquor store data. Drop variable `City`.
+- For the 10 selected cities, create a summary dataset to record the name of the city and the number of stores in city. Change `City1` back to a factor in the summary dataset. Reorder the levels of `City1` based on the number of their liquor stores.
+- Using ggplot2, draw a bar plot that shows the number of the liquor stores for those 10 cities. Make sure the levels of the cities are ordered appropriately (from the previous question). Comment on the result.
+
+```{r, message = FALSE}
+# Q1
+A = A %>% mutate(City1 = as.character(City))
+
+# Q2
+A2 = A %>% filter(City1 %in% c("Albert City", "Ames", "Boone", "Clarion", "Clive", "Dubuque", "Des Moines", "Garwin", "Iowa City", "Jefferson")) %>% select(-City)
+
+# Q3
+A3 = A2 %>% group_by(City1) %>% summarise(number = n())
+A3 = A3 %>% mutate(City1 = as.factor(City1))
+levels(A3$City1)
+A3 = A3 %>% mutate(City1 = factor(City1, levels = levels(reorder(City1, number, sum))))
+levels(A3$City1)
+
+# Q4
+A3 %>% ggplot(aes(x = City1)) + geom_bar(aes(weight = number))
+```
+
+### Question #3 (15 points)
+
+- Extract the lattitude and longtitude from the variable `Store.Address`. This should be very similar to the practice we did in class.
+- Use ggplot2, draw a scatter plot of the location of the liquor stores by the lattitude and longtitude.
+
+```{r, message = FALSE}
+# Q1
+A = A %>% separate(Store.Address, into = c("Address", "Location"), sep = "\n\\(")
+A = A %>% separate(Location, into = c("Latitude", "Longitude"), sep = ",") %>% select(-Address)
+A = A %>% separate(Longitude, into = c("Longitude", "drop"), sep = "\\)") %>% select(-drop)
+A4 = A %>% mutate(Latitude = as.numeric(A$Latitude), Longitude = as.numeric(A$Longitude)) %>% select(Name, City, Inactive, Latitude, Longitude)
+
+# Q2
+A4 %>% ggplot(aes(x = Latitude, y = Longitude)) + geom_point()
+```
+
+<br>
+
+Now, we use the **liquor sale data `Story_County_Liquor_Sales_New.csv`**.
+Note that: **Don't knit your Rmarkdown file often.** It will be slow since this dataset is large. You can run each code chuck or each line separately once the dataset is read into the environment. You can knit after everything is ready.
+
+### Question #4 (30 points)
+
+- Do all the variables have the right type (numeric, factor, character, etc.)? If not, which variables should be converted, and how? (Be careful to convert factor to numeric, first convert factor to character and then character to numeric.)
+- Check the variables `County` and `City`. Several of them should be same city or the same county but regarded as different levels in the dataset. Fix them.
+- extract year, month and day from the variable `Date`.
+- Use the `group_by()` and `summarise()` functions in `dplyr` package to obtain a summarized dataset of total `Volume.Sold..Gallons.` and `Sale..Dollars.` for different combinations of `month`, `year` and `City`. Name this data as `Liquor.Sale.Summary1` with variable names `total.volume` and `total.sale`. (The City should be corrected from the previous questions, and `Sale..Dollars.` should be converted to a numeric variable.)
+- Use ggplot2, based on `Liquor.Sale.Summary1`, draw a histogram for the distribution of `total.volume`, facet by cities. Does the result surprise you? Comment.
+- Use barplot in ggplot2, based on `Liquor.Sale.Summary1`, compare the `total.sale` between different months, facet by cities (use `scales = "free"` in facet). Color the bar by `years`. Comment on the result.
+
+```{r, message = FALSE}
+# Q1
+B = read.csv("Story_County_Liquor_Sales_New.csv", header = TRUE)
+str(B)
+B$Volume.Sold..Liters. = as.character(B$Volume.Sold..Liters.)
+B$Volume.Sold..Liters. = as.numeric(B$Volume.Sold..Liters.)
+B$Sale..Dollars. = as.character(B$Sale..Dollars.)
+B$Sale..Dollars. = as.numeric(B$Sale..Dollars.)
+
+# Q2
+unique(B$State)
+unique(B$City)
+B = B %>% mutate(County = replace(County, County == "STORY", "Story"))
+B = B %>% mutate(City = replace(City, City == "AMES", "Ames"))
+B = B %>% mutate(City = replace(City, City == "NEVADA", "Nevada"))
+B = B %>% mutate(City = replace(City, City == "STORY CITY", "Story City"))
+B = B %>% mutate(City = replace(City, City == "COLO", "Colo"))
+B = B %>% mutate(City = replace(City, City == "HUXLEY", "Huxley"))
+B = B %>% mutate(City = replace(City, City == "SLATER", "Slater"))
+B = B %>% mutate(City = replace(City, City == "MAXWELL", "Maxwell"))
+
+# Q3
+B = B %>% separate(Date, into = c("Month", "Day", "Year"))
+
+# Q4
+Liquor.Sale.Summary1 = B %>% group_by(Month, Year, City) %>% summarise(total.volume = sum(Volume.Sold..Gallons., na.rm = TRUE), total.sale = sum(Sale..Dollars., na.rm = TRUE))
+
+# Q5
+Liquor.Sale.Summary1 %>% ggplot(aes(x = total.volume)) + geom_histogram() + facet_wrap(~City)
+
+# Q6
+Liquor.Sale.Summary1 %>% ggplot(aes(x = Month, fill = Year)) + geom_bar(aes(weight = total.sale)) + facet_wrap(~City, scales = "free")
+```
+
+### Question #5 (15 points)
+
+- Use the corrected liquor sale data, first only select the stores in Ames, then summarize the total `Volume.Sold..Gallons.` and `Sale..Dollars.` for each combination of month, year and Store. Call the data `Liquor.Sale.Summary2`.
+- Join the latitude and longitude obtained from the liquor store data to `Liquor.Sale.Summary2`.
+- Use ggplot2, draw a scatter plot of the location of the Ames liquor stores by the lattitude and longtitude. Indicate the size or color of the points by the total sale of that store.
+
+```{r, message = FALSE}
+# Q1
+Liquor.Sale.Summary2 = B %>% filter(City == "Ames") %>% group_by(Month, Year, Store.Name) %>% summarise(total.volume = sum(Volume.Sold..Gallons., na.rm = TRUE), total.sale = sum(Sale..Dollars., na.rm = TRUE))
+
+# Q2
+Liquor.Sale.Summary3 = left_join(Liquor.Sale.Summary2, A4, by = c("Store.Name" = "Name"))
+
+# Q3
+Liquor.Sale.Summary3 %>% ggplot(aes(x = Latitude, y = Longitude, size = total.sale)) + geom_point()
+```
