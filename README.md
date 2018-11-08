@@ -73,6 +73,8 @@
 
 10/25 [Lab 5](Lab\lab05.html)
 
+11/08 [Lab 6](Lab\lab06.html)
+
 ## Homework
 
 08/28 [Homework 1 (due 09/04)](Homework\homework01.html)
@@ -97,6 +99,7 @@
 - [Data 1](exams\Iowa_Liquor_Stores.csv)
 - [Data 2](exams\Story_County_Liquor_Sales_New.csv)
 - [Rmd file](exams\Exam-2018.Rmd)
+- [Solution](exams\Exam-2018-Solution.html)
 
 ## Acknowledgement
 Most of the materials of this course are from Dr. Heike Hofmann at ISU. The instructor greatly appreciates Dr. Hofmann shares the notes, examples, ect., which help preparing the course. 
