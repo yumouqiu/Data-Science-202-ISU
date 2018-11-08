@@ -86,7 +86,7 @@ A = A %>% separate(Longitude, into = c("Longitude", "drop"), sep = "\\)") %>% se
 A4 = A %>% mutate(Latitude = as.numeric(A$Latitude), Longitude = as.numeric(A$Longitude)) %>% select(Name, City, Inactive, Latitude, Longitude)
 
 # Q2
-A4 %>% ggplot(aes(x = Latitude, y = Longitude)) + geom_point()
+A4 %>% ggplot(aes(x = Longitude, y = Latitude)) + geom_point()
 ```
 
 <br>
@@ -113,7 +113,7 @@ B$Sale..Dollars. = as.character(B$Sale..Dollars.)
 B$Sale..Dollars. = as.numeric(B$Sale..Dollars.)
 
 # Q2
-unique(B$State)
+unique(B$County)
 unique(B$City)
 B = B %>% mutate(County = replace(County, County == "STORY", "Story"))
 B = B %>% mutate(City = replace(City, City == "AMES", "Ames"))
@@ -151,5 +151,5 @@ Liquor.Sale.Summary2 = B %>% filter(City == "Ames") %>% group_by(Month, Year, St
 Liquor.Sale.Summary3 = left_join(Liquor.Sale.Summary2, A4, by = c("Store.Name" = "Name"))
 
 # Q3
-Liquor.Sale.Summary3 %>% ggplot(aes(x = Latitude, y = Longitude, size = total.sale)) + geom_point()
+Liquor.Sale.Summary3 %>% ggplot(aes(x = Longitude, y = Latitude, size = total.sale)) + geom_point()
 ```
