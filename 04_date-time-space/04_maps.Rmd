@@ -1,6 +1,6 @@
 ---
 title: "DS 202 - Maps"
-author: "Heike Hofmann"
+author: "Yumou Qiu"
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -13,12 +13,14 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(lubridate)
+library(maps)
 ```
 
 # Drawing maps
 
 ## Outline
 
+- package `maps`
 - what is a map
 - maps and map data in ggplot
 - drawing choropleth maps
@@ -78,26 +80,26 @@ head(states)
 ## Maps in code (1)
 
 
-```{r,  warning = FALSE, message=FALSE, fig.width=3, fig.height = 3}
+```{r,  warning = FALSE, message=FALSE, fig.width=8, fig.height = 5}
 states %>% ggplot(aes(x = long, y = lat)) + geom_point()
 ```
 
 ## Maps in code (2)
 
 
-```{r,  warning = FALSE, message=FALSE, fig.width=3, fig.height = 3}
+```{r,  warning = FALSE, message=FALSE, fig.width=8, fig.height = 5}
 states %>% ggplot(aes(x = long, y = lat)) + geom_path(aes(group = group))
 ```
 
 ## Maps in code (3)
 
-```{r, warning = FALSE, message=FALSE, fig.width=3, fig.height = 3}
+```{r, warning = FALSE, message=FALSE, fig.width=8, fig.height = 5}
 states %>% ggplot(aes(x = long, y = lat)) + geom_polygon(aes(group = group))
 ```
 
 ## Maps in code (4)
 
-```{r, warning = FALSE, message=FALSE, fig.width=3, fig.height = 3}
+```{r, warning = FALSE, message=FALSE, fig.width=8, fig.height = 5}
 states %>% ggplot(aes(x = long, y = lat)) + geom_polygon(aes(group = group, fill=lat))
 ```
 
@@ -161,10 +163,10 @@ unique(nomatch2$State)
 
 ## Join and Map
 
-```{r}
+```{r, fig.width=9, fig.height = 4.5}
 fbi.map <- fbi14 %>% left_join(states, by="region")
 fbi.map %>% filter(Type=="Burglary") %>% 
-  ggplot(aes(x = long, y = lat, fill=Count/Population*60000)) +
+  ggplot(aes(x = long, y = lat, fill=Count/Population*70000)) +
   geom_polygon(aes(group=group))
 ```
 
