@@ -120,6 +120,16 @@ US counties: ```counties <- map_data("county")```
 - <span style="color:white">Advanced: What county names are used often?
 </span>
 
+```{r, warning = FALSE, message=FALSE, fig.width=8, fig.height = 5}
+counties <- map_data("county")
+counties %>% ggplot(aes(x = long, y = lat)) + geom_path(aes(group = group))
+counties %>% ggplot(aes(x = long, y = lat)) + geom_polygon(aes(group = group))
+
+counties$Story = (counties$subregion == "story") 
+counties %>% ggplot(aes(x = long, y = lat, fill = Story)) + geom_polygon(aes(group = group))
+
+counties %>% group_by(region, subregion) %>% count() %>% group_by(subregion) %>% count() %>% arrange(desc(nn))
+```
 
 ## Choropleth maps
 
@@ -179,6 +189,17 @@ fbi.map %>% filter(Type=="Burglary") %>%
 - <span style="color:white">`scale_fill_gradient2` allows you to set a color scheme with two main colors. Read up on it and change the scheme in the first choropleth map.
 </span>
 
+```{r, fig.width=9, fig.height = 4.5}
+fbi12 <- fbi %>% filter(Year == 2012)
+fbi12$region <- tolower(fbi12$State)
+
+fbi.map12 <- fbi12 %>% left_join(states, by="region")
+fbi.map12 %>% filter(Type=="Motor.vehicle.theft") %>% 
+  ggplot(aes(x = long, y = lat, fill=Count/Population*70000)) +
+  geom_polygon(aes(group=group)) + 
+  scale_fill_gradient2()
+```
+
 ## Geographic data in layers
 
 - For data collected with GPS coordinates we can use maps as background layers
@@ -219,6 +240,19 @@ names(acc)
 - <span style="color:white">Why would it be tricky to plot a choropleth map of the number of accidents by state?
 </span>
 
+```{r}
+acc %>% filter(YEAR == 2016, LONGITUD < 0) %>% ggplot(aes(x = LONGITUD, y = LATITUDE)) + geom_point()
+
+states %>% ggplot(aes(x = long, y = lat)) + 
+  geom_path(aes(group = group)) +
+  geom_point(aes(x = LONGITUD, y = LATITUDE), size = 0.05, color = 'red', data = acc %>% filter(YEAR == 2016, LONGITUD < 0, LONGITUD > -130)) 
+
+states %>% ggplot(aes(x = long, y = lat)) + 
+  geom_path(aes(group = group)) +
+  geom_point(aes(x = LONGITUD, y = LATITUDE), size = 0.05, color = 'red', data = acc %>% filter(YEAR == 2016, LONGITUD < 0, LONGITUD > -130, DRUNK_DR == 1)) + 
+  geom_point(aes(x = LONGITUD, y = LATITUDE), size = 0.05, color = 'blue', data = acc %>% filter(YEAR == 2016, LONGITUD < 0, LONGITUD > -130, DRUNK_DR == 0))
+```
+
 ## Your Turn  {.white}
 
 <img class="cover" src="images/blue.jpeg" alt="" width=2000>
@@ -228,4 +262,7 @@ names(acc)
 - <span style="color:white">Sketch out the steps necessary to draw a choropleth map of the rate of fatal accidents by state.
 </span>
 
+```{r}
+acc %>% group_by(STATE) %>% summarise(total.acc = n(), total.fatal = sum(FATALS))
+```
 
