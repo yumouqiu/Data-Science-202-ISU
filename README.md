@@ -61,6 +61,8 @@
 
 11/01 [Lecture 4-3-layers](04_date-time-space\03_layers.html)
 
+11/13 [Lecture 4-4-maps](04_date-time-space\04_maps.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
