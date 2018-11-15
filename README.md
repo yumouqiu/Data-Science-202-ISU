@@ -63,6 +63,8 @@
 
 11/13 [Lecture 4-4-maps](04_date-time-space\04_maps.html)
 
+11/15 [Lecture 5-1-polishing](05_plot-elements\01_polishing-plots.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)

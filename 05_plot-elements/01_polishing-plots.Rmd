@@ -1,6 +1,6 @@
 ---
 title: "Polishing plots"
-author: Heike Hofmann
+author: Yumou Qiu
 ratio: 16x10
 output:
   rmdshower::shower_presentation:
@@ -104,9 +104,9 @@ display.brewer.all()
 ## Color and Fill
 
 - Area geoms (barcharts, histograms, polygons) use `fill` to map values to the fill color
-- only discrete color scales can be used:  `scale_fill_hue`, `scale_fill_brewer`, `scale_fill_grey`, ...
-- most general: `scale_fill_manual (..., values)` 
-values is a vector of color values. At least as many colors as levels in the variable have to be listed
+- continuous color scales: `scale_fill_gradient`, `scale_fill_gradient2`, ...
+- discrete color scales:  `scale_fill_hue`, `scale_fill_brewer`, `scale_fill_grey`, ...
+
 
 # Themes
 
@@ -194,5 +194,5 @@ for a complete overview see `?theme`
 
 ```{r, fig.width = 4, fig.height = 4}
 mpg %>% ggplot(aes(x = manufacturer)) + geom_bar() +
-  theme(axis.text.x = element_text(angle=90, vjust=0.5, hjust=1))
+  theme(axis.text.x = element_text(angle=45, vjust=1, hjust=1))
 ```    
