@@ -91,6 +91,8 @@
 
 10/21 [Homework 5 (due 10/30)](Homework\homework05.html)
 
+11/15 [Homework 6 (due 11/27)](Homework\homework06.html)
+
 ## Sample exam
 
 10/23 [Sample exam](exams\exam-sample.html)
