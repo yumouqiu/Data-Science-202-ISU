@@ -263,6 +263,14 @@ states %>% ggplot(aes(x = long, y = lat)) +
 </span>
 
 ```{r}
-acc %>% group_by(STATE) %>% summarise(total.acc = n(), total.fatal = sum(FATALS))
+# 1. Relate the flip code to state name. Copy and paste the flip name with state name to an excel file, save it as .csv file and read into R;
+# 2. Combine acc with StateNames by the filp code;
+# 3. Summarize the fatal rate by states
+# 4. Join the content data (acc2) with the map data (states)
+
+StateNames = read.csv("StateNames.csv", head = FALSE)
+acc1 = acc %>% left_join(StateNames, by = c("STATE" = "V2"))
+
+acc2 = acc1 %>% group_by(V1) %>% summarise(total.acc = n(), total.fatal = sum(FATALS))
 ```
 
