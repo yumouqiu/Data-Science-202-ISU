@@ -65,6 +65,10 @@
 
 11/15 [Lecture 5-1-polishing](05_plot-elements\01_polishing-plots.html)
 
+11/27 [Lecture 6-1-web scraping I](06_web-scraping\01_rvest.html)
+
+11/29 [Lecture 6-2-web scraping II](06_web-scraping\02_purrr.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
