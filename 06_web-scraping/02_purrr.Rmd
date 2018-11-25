@@ -77,6 +77,8 @@ mymean(c(1:15, NA), na.rm=T)
 </span>
 
 
+
+
 ## Get the previous week
 
 ```{r, message= FALSE}
@@ -111,6 +113,7 @@ Clean up career statistics into a function that returns dataset:
 
 ```{r}
 bb_scraper <- function(url) {
+  library(rvest)
   html <- read_html(url)
 
   names <- html %>% html_nodes("h4") %>% html_text()
@@ -154,3 +157,9 @@ This makes `data` a variable consisting of data frames
 bb <- bb %>% unnest(data)
 summary(bb)
 ```
+
+## Your Turn {.white}
+
+<img class="cover" src="images/blue.jpeg" alt="" width=2000>
+
+<span style="color:white">Write your own loop function using `for (i in 1 : n){}` to extract the same information.

@@ -146,6 +146,7 @@ newhtml &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span cl
 <h2>Another example</h2>
 <p>Clean up career statistics into a function that returns dataset:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">bb_scraper &lt;-<span class="st"> </span><span class="cf">function</span>(url) {
+  <span class="kw">library</span>(rvest)
   html &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)
 
   names &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;h4&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
@@ -207,6 +208,10 @@ bb &lt;-<span class="st"> </span><span class="kw">head</span>(bb) <span class="o
 ##                     3rd Qu.:  200.750  
 ##                     Max.   :12364.000  
 ##                     NA&#39;s   :6</code></pre>
+</section><section id="your-turn-1" class="slide level2 white">
+<h2>Your Turn</h2>
+<p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
+<p><span style="color:white">Write your own loop function using <code>for (i in 1 : n){}</code> to extract the same information.</p>
 </section>
 
   <!--
