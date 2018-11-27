@@ -92,60 +92,60 @@ html</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(tables[[<span class="dv">1</span>]])</code></pre></div>
 <pre><code>## [1] 1 3</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(tables[[<span class="dv">2</span>]])</code></pre></div>
-<pre><code>## [1] 85 10</code></pre>
+<pre><code>## [1] 87 10</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(tables[[<span class="dv">2</span>]])</code></pre></div>
 <pre><code>##                                Movie        Distributor       Gross Change
-## 1 1 new Fantastic Beasts: The Crime…       Warner Bros. $62,163,104       
-## 2 2 (1)        Dr. Seuss’ The Grinch          Universal $38,587,130   -43%
-## 3 3 (2)            Bohemian Rhapsody   20th Century Fox $16,042,965   -49%
-## 4 4 new               Instant Family Paramount Pictures $14,504,315       
-## 5 5 new                       Widows   20th Century Fox $12,361,307       
-## 6 6 (4) The Nutcracker and the Four…        Walt Disney  $4,772,950   -53%
+## 1 1 new    Ralph Breaks The Internet        Walt Disney $56,237,634       
+## 2 2 new                     Creed II                MGM $35,574,710       
+## 3 3 (2)        Dr. Seuss’ The Grinch          Universal $30,392,220   -21%
+## 4 4 (1) Fantastic Beasts: The Crime…       Warner Bros. $29,375,498   -53%
+## 5 5 (3)            Bohemian Rhapsody   20th Century Fox $14,001,156   -13%
+## 6 6 (4)               Instant Family Paramount Pictures $12,310,708   -15%
 ##   Thtrs. Per Thtr.  Total Gross Week
-## 1  4,163   $14,932  $62,163,104    1
-## 2  4,141    $9,318 $126,963,410    2
-## 3  3,810    $4,211 $128,228,824    3
-## 4  3,286    $4,414  $14,504,315    1
-## 5  2,803    $4,410  $12,361,307    1
-## 6  2,635    $1,811  $43,965,640    3</code></pre>
+## 1  4,017   $14,000  $84,750,405    1
+## 2  3,441   $10,338  $56,007,007    1
+## 3  3,960    $7,675 $180,494,990    3
+## 4  4,163    $7,056 $116,554,309    2
+## 5  2,927    $4,783 $152,158,106    4
+## 6  3,286    $3,746  $35,564,886    2</code></pre>
 </section><section id="section" class="slide level2">
 <h2></h2>
 <p>Most tables need a bit of clean-up:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(tables[[<span class="dv">2</span>]])</code></pre></div>
 <pre><code>##  [1] &quot;&quot;            &quot;&quot;            &quot;Movie&quot;       &quot;Distributor&quot; &quot;Gross&quot;      
 ##  [6] &quot;Change&quot;      &quot;Thtrs.&quot;      &quot;Per Thtr.&quot;   &quot;Total Gross&quot; &quot;Week&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(tables[[<span class="dv">2</span>]])[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Rank.Last.Week&quot;</span>, <span class="st">&quot;Rank&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(tables[[<span class="dv">2</span>]])[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Rank&quot;</span>, <span class="st">&quot;Rank.Last.Week&quot;</span>)
 <span class="kw">str</span>(tables[[<span class="dv">2</span>]])</code></pre></div>
-<pre><code>## &#39;data.frame&#39;:    85 obs. of  10 variables:
-##  $ Rank.Last.Week: int  1 2 3 4 5 6 7 8 9 10 ...
-##  $ Rank          : chr  &quot;new&quot; &quot;(1)&quot; &quot;(2)&quot; &quot;new&quot; ...
-##  $ Movie         : chr  &quot;Fantastic Beasts: The Crime…&quot; &quot;Dr. Seuss’ The Grinch&quot; &quot;Bohemian Rhapsody&quot; &quot;Instant Family&quot; ...
-##  $ Distributor   : chr  &quot;Warner Bros.&quot; &quot;Universal&quot; &quot;20th Century Fox&quot; &quot;Paramount Pictures&quot; ...
-##  $ Gross         : chr  &quot;$62,163,104&quot; &quot;$38,587,130&quot; &quot;$16,042,965&quot; &quot;$14,504,315&quot; ...
-##  $ Change        : chr  &quot;&quot; &quot;-43%&quot; &quot;-49%&quot; &quot;&quot; ...
-##  $ Thtrs.        : chr  &quot;4,163&quot; &quot;4,141&quot; &quot;3,810&quot; &quot;3,286&quot; ...
-##  $ Per Thtr.     : chr  &quot;$14,932&quot; &quot;$9,318&quot; &quot;$4,211&quot; &quot;$4,414&quot; ...
-##  $ Total Gross   : chr  &quot;$62,163,104&quot; &quot;$126,963,410&quot; &quot;$128,228,824&quot; &quot;$14,504,315&quot; ...
-##  $ Week          : chr  &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;1&quot; ...</code></pre>
+<pre><code>## &#39;data.frame&#39;:    87 obs. of  10 variables:
+##  $ Rank          : int  1 2 3 4 5 6 7 8 9 10 ...
+##  $ Rank.Last.Week: chr  &quot;new&quot; &quot;new&quot; &quot;(2)&quot; &quot;(1)&quot; ...
+##  $ Movie         : chr  &quot;Ralph Breaks The Internet&quot; &quot;Creed II&quot; &quot;Dr. Seuss’ The Grinch&quot; &quot;Fantastic Beasts: The Crime…&quot; ...
+##  $ Distributor   : chr  &quot;Walt Disney&quot; &quot;MGM&quot; &quot;Universal&quot; &quot;Warner Bros.&quot; ...
+##  $ Gross         : chr  &quot;$56,237,634&quot; &quot;$35,574,710&quot; &quot;$30,392,220&quot; &quot;$29,375,498&quot; ...
+##  $ Change        : chr  &quot;&quot; &quot;&quot; &quot;-21%&quot; &quot;-53%&quot; ...
+##  $ Thtrs.        : chr  &quot;4,017&quot; &quot;3,441&quot; &quot;3,960&quot; &quot;4,163&quot; ...
+##  $ Per Thtr.     : chr  &quot;$14,000&quot; &quot;$10,338&quot; &quot;$7,675&quot; &quot;$7,056&quot; ...
+##  $ Total Gross   : chr  &quot;$84,750,405&quot; &quot;$56,007,007&quot; &quot;$180,494,990&quot; &quot;$116,554,309&quot; ...
+##  $ Week          : chr  &quot;1&quot; &quot;1&quot; &quot;3&quot; &quot;2&quot; ...</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">box &lt;-<span class="st"> </span>tables[[<span class="dv">2</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
   <span class="dt">Gross =</span> <span class="kw">parse_number</span>(Gross),
   <span class="dt">Thtrs. =</span> <span class="kw">parse_number</span>(Thtrs.)
 )
 <span class="kw">head</span>(box)</code></pre></div>
-<pre><code>##   Rank.Last.Week Rank                        Movie        Distributor
-## 1              1  new Fantastic Beasts: The Crime…       Warner Bros.
-## 2              2  (1)        Dr. Seuss’ The Grinch          Universal
-## 3              3  (2)            Bohemian Rhapsody   20th Century Fox
-## 4              4  new               Instant Family Paramount Pictures
-## 5              5  new                       Widows   20th Century Fox
-## 6              6  (4) The Nutcracker and the Four…        Walt Disney
+<pre><code>##   Rank Rank.Last.Week                        Movie        Distributor
+## 1    1            new    Ralph Breaks The Internet        Walt Disney
+## 2    2            new                     Creed II                MGM
+## 3    3            (2)        Dr. Seuss’ The Grinch          Universal
+## 4    4            (1) Fantastic Beasts: The Crime…       Warner Bros.
+## 5    5            (3)            Bohemian Rhapsody   20th Century Fox
+## 6    6            (4)               Instant Family Paramount Pictures
 ##      Gross Change Thtrs. Per Thtr.  Total Gross Week
-## 1 62163104          4163   $14,932  $62,163,104    1
-## 2 38587130   -43%   4141    $9,318 $126,963,410    2
-## 3 16042965   -49%   3810    $4,211 $128,228,824    3
-## 4 14504315          3286    $4,414  $14,504,315    1
-## 5 12361307          2803    $4,410  $12,361,307    1
-## 6  4772950   -53%   2635    $1,811  $43,965,640    3</code></pre>
+## 1 56237634          4017   $14,000  $84,750,405    1
+## 2 35574710          3441   $10,338  $56,007,007    1
+## 3 30392220   -21%   3960    $7,675 $180,494,990    3
+## 4 29375498   -53%   4163    $7,056 $116,554,309    2
+## 5 14001156   -13%   2927    $4,783 $152,158,106    4
+## 6 12310708   -15%   3286    $3,746  $35,564,886    2</code></pre>
 </section><section id="your-turn-6-mins" class="slide level2 white">
 <h2>Your Turn (6 mins)</h2>
 <p><img class="cover" src="images/blue.jpeg" alt="" width=2000></p>
@@ -220,6 +220,23 @@ url.player</code></pre></div>
 <li><span style="color:white">Does the same code work to extract career statistics for (some of) the other players? </span></li>
 <li><span style="color:white">What other information do we need to know? and how can we get to that? </span></li>
 </ul>
+</section><section id="your-turn---solution" class="slide level2">
+<h2>Your Turn - Solution</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">url &lt;-<span class="st"> &quot;http://www.baseball-reference.com/players/a/aardsda01.shtml&quot;</span>
+html &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)
+<span class="co"># good first start, but not good for further processing</span>
+h2 =<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;.stats_pullout p , h4&quot;</span>)
+
+h3 =<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;.p3 p , .p2 p , .p1 p , .stats_pullout strong , h4&quot;</span>)</code></pre></div>
+</section><section id="your-turn---solution-2" class="slide level2">
+<h2>Your Turn - Solution (2)</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># better: pull out individual vectors</span>
+html <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;h4&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</code></pre></div>
+<pre><code>##  [1] &quot;SUMMARY&quot; &quot;WAR&quot;     &quot;W&quot;       &quot;L&quot;       &quot;ERA&quot;     &quot;G&quot;       &quot;GS&quot;     
+##  [8] &quot;SV&quot;      &quot;IP&quot;      &quot;SO&quot;      &quot;WHIP&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">html <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_nodes</span>(<span class="st">&quot;.stats_pullout p&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>() </code></pre></div>
+<pre><code>##  [1] &quot;Career&quot; &quot;1.7&quot;    &quot;16&quot;     &quot;18&quot;     &quot;4.27&quot;   &quot;331&quot;    &quot;0&quot;     
+##  [8] &quot;69&quot;     &quot;337.0&quot;  &quot;340&quot;    &quot;1.421&quot;</code></pre>
 </section>
 
   <!--

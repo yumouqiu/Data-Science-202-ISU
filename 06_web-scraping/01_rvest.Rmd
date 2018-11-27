@@ -55,7 +55,7 @@ Most tables need a bit of clean-up:
 ```{r}
 names(tables[[2]])
 
-names(tables[[2]])[1:2] <- c("Rank.Last.Week", "Rank")
+names(tables[[2]])[1:2] <- c("Rank", "Rank.Last.Week")
 str(tables[[2]])
 box <- tables[[2]] %>% mutate(
   Gross = parse_number(Gross),
@@ -146,6 +146,23 @@ url.player
 - <span style="color:white">What other information do we need to know? and how can we get to that?
 </span>
 
+## Your Turn  - Solution
 
+```{r}
+url <- "http://www.baseball-reference.com/players/a/aardsda01.shtml"
+html <- read_html(url)
+# good first start, but not good for further processing
+h2 = html %>% html_nodes(".stats_pullout p , h4")
+
+h3 = html %>% html_nodes(".p3 p , .p2 p , .p1 p , .stats_pullout strong , h4")
+```
+
+## Your Turn  - Solution (2)
+
+```{r}
+# better: pull out individual vectors
+html %>% html_nodes("h4") %>% html_text()
+html %>% html_nodes(".stats_pullout p") %>% html_text() 
+```
 
 
