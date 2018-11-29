@@ -1,0 +1,3 @@
+Camera label: Vis_SV_0
+MM pro pixel X: 1.54902601242065
+MM pro pixel Y: 1.55327594280243

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DS 202 - Plant image analysis</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="01_images_files/shower-ribbon/package/styles/screen-4x3.css">
+  <link rel="stylesheet" href="01_images_files/rmdshower/style-common.css">
+  <link rel="stylesheet" href="01_images_files/rmdshower/style-ribbon.css">
+  <link rel="stylesheet" href="01_images_files/shower-ribbon/style-override.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="01_images_files/rmdshower/auto-render.min.js" type="text/javascript"></script>
+  
+  
+    <style type="text/css">
+   div.sourceCode { overflow-x: auto; }
+   table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+     margin: 0; padding: 0; vertical-align: baseline; border: none; }
+   table.sourceCode { width: 100%; line-height: 100%; }
+   td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+   td.sourceCode { padding-left: 5px; }
+   code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+   code > span.dt { color: #902000; } /* DataType */
+   code > span.dv { color: #40a070; } /* DecVal */
+   code > span.bn { color: #40a070; } /* BaseN */
+   code > span.fl { color: #40a070; } /* Float */
+   code > span.ch { color: #4070a0; } /* Char */
+   code > span.st { color: #4070a0; } /* String */
+   code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+   code > span.ot { color: #007020; } /* Other */
+   code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+   code > span.fu { color: #06287e; } /* Function */
+   code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+   code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+   code > span.cn { color: #880000; } /* Constant */
+   code > span.sc { color: #4070a0; } /* SpecialChar */
+   code > span.vs { color: #4070a0; } /* VerbatimString */
+   code > span.ss { color: #bb6688; } /* SpecialString */
+   code > span.im { } /* Import */
+   code > span.va { color: #19177c; } /* Variable */
+   code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+   code > span.op { color: #666666; } /* Operator */
+   code > span.bu { } /* BuiltIn */
+   code > span.ex { } /* Extension */
+   code > span.pp { color: #bc7a00; } /* Preprocessor */
+   code > span.at { color: #7d9029; } /* Attribute */
+   code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+   code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+   code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+   code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  
+  
+  
+</head>
+
+<body class="shower list">
+
+  <header class="caption">
+    <h1>DS 202 - Plant image analysis</h1>
+    <p>Yumou Qiu</p>
+  </header>
+
+  
+  
+<section id="image-processing-with-r" class="titleslide slide level1"><h2 class="shout">Image Processing with R</h2></section><section id="plant-image-processing" class="slide level2">
+<h2>Plant image processing</h2>
+<p>Feature extraction:</p>
+<ul>
+<li>plant size, height … …</li>
+<li>convex hull, skeleton … …</li>
+</ul>
+<p><img src="images/plant1.png" width=300 height=300>       <img src="images/plant2.png" width=300 height=300></p>
+</section><section id="the-png-package" class="slide level2">
+<h2>The <code>png</code> package</h2>
+<ul>
+<li>Read images into R</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(png)
+
+image1=<span class="kw">readPNG</span>(<span class="st">&quot;images/plant1.png&quot;</span>)
+image2=<span class="kw">readPNG</span>(<span class="st">&quot;images/plant2.png&quot;</span>)</code></pre></div>
+<p><code>image1</code> and <code>image2</code> are a 3-dimensional array</p>
+</section><section id="size-of-the-image" class="slide level2">
+<h2>Size of the image</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(image1)</code></pre></div>
+<pre><code>## [1] 512 610   4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">dim</span>(image2)</code></pre></div>
+<pre><code>## [1] 512 610   4</code></pre>
+<ul>
+<li><code>512</code> is the number of rows in the image</li>
+<li><code>610</code> is the number of columns in the image</li>
+<li><code>4</code> includes the red, green and blue channels of the iamge; the last channel is the transparency</li>
+<li>each R, G, B intensity give a <code>512 * 610</code> matrix</li>
+<li>each element in the matrix is a pixel</li>
+</ul>
+</section><section id="channels" class="slide level2">
+<h2>Channels</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">image1R =<span class="st"> </span>image1[, , <span class="dv">1</span>] <span class="co"># Red intensity</span>
+image1G =<span class="st"> </span>image1[, , <span class="dv">2</span>] <span class="co"># Green intensity</span>
+image1B =<span class="st"> </span>image1[, , <span class="dv">3</span>] <span class="co"># Blue intensity</span></code></pre></div>
+<p>Usually don’t use the 4th channel.</p>
+</section><section id="color-intensity" class="slide level2">
+<h2>Color intensity</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+
+data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(intensity)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>() <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>channel)</code></pre></div>
+<p><img src="01_images_files/figure-revealjs/unnamed-chunk-5-1.png" width="768" /></p>
+</section><section id="resolution" class="slide level2">
+<h2>Resolution</h2>
+<p><img src="images/plant3.png" width=300 height=300></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">image3=<span class="kw">readPNG</span>(<span class="st">&quot;images/plant3.png&quot;</span>)
+<span class="kw">dim</span>(image3)</code></pre></div>
+<pre><code>## [1] 2056 2454    4</code></pre>
+</section><section id="transformation-on-the-channels" class="slide level2">
+<h2>Transformation on the channels</h2>
+<p>RGB to Gray image transformation</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Function: RGB Convert to Gray
+Color2Gray =<span class="st"> </span><span class="cf">function</span>(image, <span class="dt">weight =</span> <span class="kw">c</span>(<span class="fl">0.299</span>, <span class="fl">0.587</span>, <span class="fl">0.114</span>)){
+<span class="co">#weight should be positive</span>
+    weight =<span class="st"> </span>weight <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(weight)
+    imageGray =<span class="st"> </span>image[, , <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>weight[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>image[, , <span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>weight[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>image[, , <span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>weight[<span class="dv">3</span>]
+  <span class="kw">return</span>(imageGray)
+}
+imageGray =<span class="st"> </span><span class="kw">Color2Gray</span>(image1)
+<span class="kw">writePNG</span>(imageGray, <span class="st">&quot;imageGray.png&quot;</span>)</code></pre></div>
+<p><img src="imageGray.png" width=200 height=200></p>
+</section><section id="green-intensity-contrast" class="slide level2">
+<h2>Green intensity contrast</h2>
+<ul>
+<li><code>weight = c(0.299, 0.587, 0.114)</code> is the weight on the <code>R</code>, <code>G</code>, <code>B</code> channels</li>
+<li>Consider <code>weight = c(-1, 2, -1)</code> for green intensity contrast</li>
+<li>May result in negative intensity value, not a valid image</li>
+<li>Black and White image (0-1 image)</li>
+</ul>
+</section><section id="plant-segmentation" class="slide level2">
+<h2>Plant segmentation</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">imageBinary =<span class="st"> </span><span class="cf">function</span>(image, <span class="dt">weight =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>), <span class="dt">threshold1 =</span> <span class="dv">30</span> <span class="op">/</span><span class="st"> </span><span class="dv">255</span>, <span class="dt">threshold2 =</span> <span class="fl">0.075</span>){
+    weight =<span class="st"> </span>weight <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">sum</span>(weight<span class="op">^</span><span class="dv">2</span>))
+    imagesum =<span class="st"> </span>image[, , <span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>image[, , <span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>image[, , <span class="dv">3</span>]
+    temp1 =<span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>(imagesum <span class="op">&gt;</span><span class="st"> </span>threshold1)
+    imageweight =<span class="st"> </span>image[, , <span class="dv">1</span>] <span class="op">*</span><span class="st"> </span>weight[<span class="dv">1</span>] <span class="op">+</span><span class="st"> </span>image[, , <span class="dv">2</span>] <span class="op">*</span><span class="st"> </span>weight[<span class="dv">2</span>] <span class="op">+</span><span class="st"> </span>image[, , <span class="dv">3</span>] <span class="op">*</span><span class="st"> </span>weight[<span class="dv">3</span>] 
+    temp2 =<span class="st"> </span><span class="dv">1</span> <span class="op">*</span><span class="st"> </span>(imageweight <span class="op">&gt;</span><span class="st"> </span>threshold2 <span class="op">*</span><span class="st"> </span>imagesum)
+    <span class="kw">return</span>(temp1 <span class="op">*</span><span class="st"> </span>temp2)
+}
+imageBW =<span class="st"> </span><span class="kw">imageBinary</span>(image1,  <span class="dt">weight =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>), <span class="dt">threshold1 =</span> <span class="dv">30</span> <span class="op">/</span><span class="st"> </span><span class="dv">255</span>, <span class="dt">threshold2 =</span> <span class="fl">0.05</span>)
+<span class="kw">writePNG</span>(imageBW,<span class="st">&quot;imageBW.png&quot;</span>)</code></pre></div>
+<p><img src="imageBW.png" width=200 height=200></p>
+</section><section id="plant-trait-question-needs-be-solved" class="slide level2">
+<h2>Plant trait (Question needs be solved)</h2>
+<ul>
+<li>plant size: total white pixel counts from the lack-white image</li>
+<li>plant height: the number of the top row with white pixel minus that of the bottom row with white pixel</li>
+<li>plant height is very sensitive to the segmentation noise</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">plantsize =<span class="st"> </span><span class="kw">sum</span>(imageBW)
+RowCount =<span class="st"> </span><span class="kw">rowSums</span>(imageBW); ColCount =<span class="st"> </span><span class="kw">colSums</span>(imageBW)
+NonzeroRow =<span class="st"> </span><span class="kw">which</span>(RowCount <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>); NonzeroCol =<span class="st"> </span><span class="kw">which</span>(ColCount <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>)
+plantheight =<span class="st"> </span><span class="kw">quantile</span>(NonzeroRow, <span class="fl">0.975</span>)[[<span class="dv">1</span>]] <span class="op">-</span><span class="st"> </span><span class="kw">quantile</span>(NonzeroRow, <span class="fl">0.025</span>)[[<span class="dv">1</span>]]
+plantwidth =<span class="st"> </span><span class="kw">quantile</span>(NonzeroCol, <span class="fl">0.975</span>)[[<span class="dv">1</span>]] <span class="op">-</span><span class="st"> </span><span class="kw">quantile</span>(NonzeroCol, <span class="fl">0.025</span>)[[<span class="dv">1</span>]]</code></pre></div>
+</section><section id="getting-worse-as-plant-grows" class="slide level2">
+<h2>Getting worse as plant grows</h2>
+<p><img src="images/plant3BW1.png" width=300 height=300>       <img src="images/plant3BW2.png" width=300 height=300></p>
+</section>
+
+  <!--
+  To hide progress bar from entire presentation
+  just remove “progress” element.
+  -->
+  <!-- <div class="progress"></div> -->
+  <script src="01_images_files/rmdshower/node_modules/shower/node_modules/shower-core/shower.min.js"></script>
+  <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+  <!-- Photos by John Carey, fiftyfootshadows.net -->
+
+    <script>renderMathInElement(document.body);</script>
+  
+  
+</body>
+</html>
