@@ -69,6 +69,8 @@
 
 11/29 [Lecture 6-2-web scraping II](06_web-scraping\02_purrr.html)
 
+11/29 [Lecture 7-1-image processing](07_plant-imaging\01_images.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)
