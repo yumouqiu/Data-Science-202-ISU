@@ -119,6 +119,41 @@
 <li><span style="color:white">Use <code>rvest</code> to download the box office gross in that week. </span></li>
 <li><span style="color:white">Write a function that uses the url as input argument, scrapes the data, cleans it up, and returns the cleaned data. </span></li>
 </ul>
+</section><section id="your-turn---solution" class="slide level2">
+<h2>Your turn - solution</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">url &lt;-<span class="st"> &quot;https://www.the-numbers.com/weekend-box-office-chart&quot;</span>
+
+boxoffice_scraper &lt;-<span class="st"> </span><span class="cf">function</span>(url) {
+  <span class="kw">library</span>(rvest)
+  <span class="kw">library</span>(tidyverse)
+  html &lt;-<span class="st"> </span><span class="kw">read_html</span>(url)
+  tables &lt;-<span class="st"> </span>html <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_table</span>(<span class="dt">fill=</span><span class="ot">TRUE</span>)
+  box &lt;-<span class="st"> </span>tables[[<span class="dv">2</span>]]
+  <span class="kw">names</span>(box)[<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>] &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Rank&quot;</span>, <span class="st">&quot;Rank.Last.Week&quot;</span>)
+  box &lt;-<span class="st"> </span>box <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(
+    <span class="dt">Gross =</span> <span class="kw">parse_number</span>(Gross),
+    <span class="dt">Thtrs. =</span> <span class="kw">parse_number</span>(Thtrs.)
+  )
+  <span class="kw">return</span>(box)  
+}</code></pre></div>
+</section><section id="now-try-it-out" class="slide level2">
+<h2>Now try it out</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">box &lt;-<span class="st"> </span><span class="kw">boxoffice_scraper</span>(<span class="st">&quot;https://www.the-numbers.com/weekend-box-office-chart&quot;</span>)
+<span class="kw">head</span>(box)</code></pre></div>
+<pre><code>##   Rank Rank.Last.Week            Movie        Distributor    Gross Change
+## 1    1            (2)    A Quiet Place Paramount Pictures 20911809   -37%
+## 2    2            (1)          Rampage       Warner Bros. 20094294   -44%
+## 3    3            new    I Feel Pretty  STX Entertainment 16030218       
+## 4    4            new Super Troopers 2   20th Century Fox 15181624       
+## 5    5            (3)    Truth or Dare          Universal  7793425   -58%
+## 6    6            (4) Ready Player One       Warner Bros.  7418738   -36%
+##   Thtrs. Per Thtr.  Total Gross Week
+## 1   3808    $5,492 $131,270,520    3
+## 2   4115    $4,883  $65,694,360    2
+## 3   3440    $4,660  $16,030,218    1
+## 4   2038    $7,449  $15,181,624    1
+## 5   3068    $2,540  $30,268,840    2
+## 6   3208    $2,313 $126,100,064    4</code></pre>
 </section><section id="get-the-previous-week" class="slide level2">
 <h2>Get the previous week</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
@@ -159,7 +194,7 @@ newhtml &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span cl
   <span class="kw">data.frame</span>(<span class="dt">player=</span>player, <span class="dt">position=</span>position, 
              <span class="dt">statistics=</span>names,  <span class="dt">values=</span><span class="kw">parse_number</span>(values))
 }</code></pre></div>
-</section><section id="now-try-it-out" class="slide level2">
+</section><section id="now-try-it-out-1" class="slide level2">
 <h2>Now try it out</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">bb_scraper</span>(<span class="st">&quot;http://www.baseball-reference.com/players/a/aardsda01.shtml&quot;</span>)</code></pre></div>
 <pre><code>## Warning: 1 parsing failure.
