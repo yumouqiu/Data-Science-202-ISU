@@ -71,6 +71,10 @@
 
 11/29 [Lecture 7-1-image processing](07_plant-imaging\01_images.html)
 
+### December
+
+12/26 [Presentation](schedule.html)
+
 ## Labs
 
 08/30 [Lab 1](Lab\lab01.html)

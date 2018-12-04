@@ -1,0 +1,16 @@
+---
+title: "Presentation Schedule"
+author: "Yumou"
+date: "12/4/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+- 12:40 - 12:55: Matt Casagranda
+- 12:55 - 13:10: Collin Loy and Michelle Cryder
+- 13:10 - 13:25: Karthik Ravishankar and Matt Kohane
+- 13:25 - 13:40: Nicholas Stout, Daniel Tacconi and Isaac Nellans
+- 13:40 - 13:55: Lynn Huang, Prateek Oberoi and Aisha Washington
